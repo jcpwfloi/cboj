@@ -1,6 +1,8 @@
 var express = require('express');
 var JSON = require('JSON');
 var router = express.Router();
+var mauth = require('../lib/auth');
+//TODO mauth not completed
 
 var nav = [
     { name: '首页', ref: '/', active: true },
@@ -22,7 +24,12 @@ router.post('/auth', function(req, res) {
     var data = {};
     data.username = req.param('username');
     data.password = req.param('password');
-    res.send(JSON.stringify(data));
+    //res.send(JSON.stringify(data));
+    if (mauth.auth(data.username, data.password)) {
+        res.send('authorized');
+    } else {
+        res.send('failed');
+    }
     res.status(200).end();
 });
 
