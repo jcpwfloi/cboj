@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    script(src='/javascripts/login/login.js')
+    include nav
+    .container-fluid
+        .col-md-4
+        .col-md-4
+            .col-md-2
+            .col-md-8
+                br
+                br
+                br
+                br
+                .form-group
+                    label 邮箱地址/用户名
+                    input.form-control#username(type='email')
+                .form-group
+                    label 密码
+                    input.form-control#password(type='password')
+                .checkbox
+                    label
+                        input(type='checkbox')
+                        | 记住我(10天)
+                button.btn.btn-default#submit 提交
+                button.btn.btn-success.disabled GitHub登陆(未开通)
+

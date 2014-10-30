@@ -1,0 +1,14 @@
+nav.navbar.navbar-default
+    div.container-fluid
+        div.navbar-header
+            a.navbar-brand(href='#') CodeBursts
+        div.collapse.navbar-collapse
+            ul.nav.navbar-nav
+                - each navli in nav
+                    case navli.active
+                        when false
+                            li
+                                a(href!=navli.ref)= navli.name
+                        when true
+                            li.active
+                                a(href!=navli.ref)= navli.name
