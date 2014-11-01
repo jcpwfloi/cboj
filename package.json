@@ -14,6 +14,7 @@
     "debug": "~2.0.0",
     "jade": "~1.6.0",
     "less-middleware": "1.0.x",
-    "monk": "~0.9.0"
+    "monk": "~0.9.0",
+    "express-session": "~1.9.1"
   }
 }

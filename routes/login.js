@@ -22,15 +22,18 @@ router.get('/register', function(req, res) {
 
 router.post('/auth', function(req, res) {
     var data = {};
+    req.session.username = null;
+    req.session.password = null;
     data.username = req.param('username');
     data.password = req.param('password');
     //res.send(JSON.stringify(data));
-    if (mauth.auth(data.username, data.password)) {
-        res.send('authorized');
-    } else {
-        res.send('failed');
-    }
-    res.status(200).end();
+    var authdata;
+    mauth.auth(data.username, function(docs) {
+        if (docs.password == data.password) {
+            req.session.username = data.username;
+        }
+        res.status(200).end();
+    });
 });
 
 module.exports = router;

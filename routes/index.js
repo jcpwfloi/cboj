@@ -16,9 +16,12 @@ var ranklist = [
 
 /* GET home page. */
 router.get('/', function(req, res) {
+    var login = {};
+    if (req.session.username) login.username = req.session.username;
   res.render('index', { title: '首页 - CodeBursts!',
       nav: nav,
-      ranklist: ranklist });
+      ranklist: ranklist,
+      login: login});
 });
 
 module.exports = router;
