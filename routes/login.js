@@ -1,6 +1,7 @@
 var express = require('express');
 var JSON = require('JSON');
 var router = express.Router();
+var db = require('../model/dbquery');
 
 var nav = [
     { name: '首页', ref: '/', active: true },
@@ -19,6 +20,12 @@ router.get('/register', function(req, res) {
 });
 
 router.post('/auth', function(req, res) {
+    var password = req.param('password');
+    var username = req.param('username');
+    db.getUserByName(username, function(err, docs) {
+        if (err) throw err;
+        console.log(docs);
+    });
 });
 
 module.exports = router;
