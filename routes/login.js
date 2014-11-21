@@ -19,6 +19,29 @@ router.get('/register', function(req, res) {
     res.render('login/register', { title: '注册 - CodeBursts', nav: nav });
 });
 
+router.post('/register', function(req, res) {
+    var username = req.param('user');
+    var password = req.param('pass');
+    db.getUserByName(username, function(err, docs) {
+        if (err) throw err;
+        if (docs) {
+            res.send({stat: 0});
+            res.end();
+            return;
+        } else {
+            db.insertUser({name: username, pass: password}, function(err, doc) {
+                if (err) throw err;
+                res.send({stat: 1});
+                res.end();
+            });
+        }
+    });
+});
+
+router.get('/register/success', function(req, res) {
+    res.render('login/success', { title: '注册成功 - CodeBursts!', nav: nav });
+});
+
 router.get('/logout', function(req, res) {
     req.session.user = null;
     res.redirect('back');
@@ -30,7 +53,6 @@ router.post('/auth', function(req, res) {
     var username = req.param('username');
     db.getUserByName(username, function(err, docs) {
         if (err) throw err;
-        console.log(docs);
         if (!docs) {
             res.send({stat: "failed"});
             res.end();

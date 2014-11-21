@@ -9,21 +9,8 @@ var nav = [
 	{ name: '排名', ref: '/ranklist', active: false }
             ];
 
-var ranklist = [
-        { name: 'JCPWFLOI', rating: 2000, level: 'master' },
-        { name: 'LXLWDGY', rating: 1500, level: 'expert' }
-            ];
-
-/* GET home page. */
 router.get('/', function(req, res) {
-    var login = {};
-    if (req.session.user) {
-        login.username = req.session.user.username;
-    }
-  res.render('index', { title: '首页 - CodeBursts!',
-      nav: nav,
-      ranklist: ranklist,
-      login: login});
+    res.render('problem', { title: '问题 - CodeBursts', nav: nav });
 });
 
 module.exports = router;

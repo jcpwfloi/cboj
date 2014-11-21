@@ -5,7 +5,6 @@ var mongodb = new mongo.Db('cboj', server, {safe: true});
 function getUserByName(username, callback) {
     mongodb.open(function(err, db) {
         if (err) return callback(err, null);
-        console.log('OK');
         db.collection('users', function(err, collection) {
             if (err) {
                 mongodb.close();

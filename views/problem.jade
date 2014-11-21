@@ -1,0 +1,17 @@
+mixin problem(d)
+    tr(class!=d.styl)
+        td= d.id
+        td= d.name
+        td= d.ac
+        td= d.all
+
+extends layout
+
+block content
+    include nav
+    div.col-md-9
+        h2 问题列表&nbsp;&nbsp;
+            small problemset
+        hr
+    div.col-md-3
+
