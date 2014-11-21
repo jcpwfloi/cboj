@@ -1,15 +1,16 @@
 extends ../layout
 
 block content
-    script(src='/javascripts/login/login.js')
+    script(src='/javascripts/login/register.js')
     include ../nav
     .container-fluid
         .col-md-4
         .col-md-4
             .col-md-2
             .col-md-8
-                br
-                br
+                div.register-message
+                    br
+                    br
                 .form-group
                     label 邮箱地址/用户名
                     input.form-control#user(type='email')

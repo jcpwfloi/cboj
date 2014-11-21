@@ -17,7 +17,10 @@ var ranklist = [
 /* GET home page. */
 router.get('/', function(req, res) {
     var login = {};
-    if (req.session.username) login.username = req.session.username;
+    if (req.session.user) {
+        console.log(req.session.user);
+        login.username = req.session.user.username;
+    }
   res.render('index', { title: '首页 - CodeBursts!',
       nav: nav,
       ranklist: ranklist,

@@ -1,11 +1,17 @@
 $(document).ready(function() {
     var username, password;
     function login() {
-        $.post('/login/auth', {
+        $.post("/login/auth", {
             username: username,
             password: password
         }, function(data) {
-        }, "json");
+            if (data.stat == "success") window.location.href = '/';
+            else {
+                var EMessage = '<div class="alert alert-danger">用户名或密码错误</div>';
+                $('.login-message').html(EMessage);
+                setInterval("$('.login-message').html('<br /><br /><br />')", 2000);
+            }
+        });
     }
     $('#password').keyup(function(event) {
         var keycode = event.which;

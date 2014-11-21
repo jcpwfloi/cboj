@@ -11,7 +11,8 @@ div.jumbotron
             a.btn.btn-primary.btn-lg(href='/login/register') 点此注册
             a.btn.btn-success.btn-lg(href='/login') 点此登陆
         else
-            h4 &nbsp;&nbsp;&nbsp;&nbsp;欢迎您，#{login.username}
+            a.btn.btn-primary.btn-lg(href='#') 欢迎您，#{login.username}
+            a.btn.btn-success.btn-lg(href='/login/logout', style='margin-left: 10px') 登出
 h2 &nbsp;&nbsp;公告&nbsp;&nbsp;&nbsp;
     small notice
 hr

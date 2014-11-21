@@ -19,12 +19,34 @@ router.get('/register', function(req, res) {
     res.render('login/register', { title: '注册 - CodeBursts', nav: nav });
 });
 
+router.get('/logout', function(req, res) {
+    req.session.user = null;
+    res.redirect('back');
+});
+
 router.post('/auth', function(req, res) {
+    req.session.user = null;
     var password = req.param('password');
     var username = req.param('username');
     db.getUserByName(username, function(err, docs) {
         if (err) throw err;
         console.log(docs);
+        if (!docs) {
+            res.send({stat: "failed"});
+            res.end();
+            return;
+        }
+        if (docs.pass == password) {
+            req.session.user = {
+                username: username,
+                password: password
+            };
+            res.send({stat: "success"});
+            res.end();
+        } else {
+            res.send({stat: "failed"});
+            res.end();
+        }
     });
 });
 
