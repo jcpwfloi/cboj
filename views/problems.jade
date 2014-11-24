@@ -1,0 +1,43 @@
+extends layout
+
+block content
+    link(rel='stylesheet', href='/stylesheets/problems.css')
+    include nav
+    div.col-md-9
+        h3 题目描述&nbsp;&nbsp;
+            small Description
+        hr
+        div.cont
+            span.markdown-text
+                - if (doc && doc.description)
+                    | #{doc.description}
+        h3 输入要求&nbsp;&nbsp;
+            small Input
+        hr
+        div.cont
+            span.markdown-text
+                - if (doc && doc.input)
+                    | #{doc.input}
+        h3 输出要求&nbsp;&nbsp;
+            small Output
+        hr
+        div.cont
+            span.markdown-text
+                - if (doc && doc.output)
+                    | #{doc.output}
+        h3 样例输入&nbsp;&nbsp;
+            small Sample Input
+        hr
+        div.cont
+            pre
+                - if (doc && doc.sampleInput)
+                    | #{doc.sampleInput}
+        h3 样例输出&nbsp;&nbsp;
+            small Sample Output
+        hr
+        div.cont
+            pre
+                - if (doc && doc.sampleOutput)
+                    | #{doc.sampleOutput}
+    div.col-md-3
+

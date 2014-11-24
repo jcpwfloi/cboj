@@ -2,7 +2,8 @@ mixin problem(d)
     tr(class!=d.styl)
         td= d.stat
         td= d.id
-        td= d.name
+        td
+            a(href!='/problems/' + d.id)= d.name
         td= d.all
         td= d.ac
         td= d.rat
@@ -17,8 +18,8 @@ block content
         hr
         table.table.table-striped.table-hover
             th(width='9%') 状态
-            th(width='6%') #
-            th(width='30%') 题目名字
+            th(width='10%') #
+            th(width='35%') 题目名字
             th 提交次数
             th 通过次数
             th 通过比率
