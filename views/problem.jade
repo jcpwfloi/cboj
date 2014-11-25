@@ -6,7 +6,11 @@ mixin problem(d)
             a(href!='/problems/' + d.id)= d.name
         td= d.all
         td= d.ac
-        td= d.rat
+        td
+            - if (d.all && d.ac)
+                | #{Math.round(d.ac * 10000 / d.all) / 100}%
+            - else
+                | 0%
 
 extends layout
 

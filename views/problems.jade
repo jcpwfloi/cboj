@@ -4,9 +4,13 @@ block content
     link(rel='stylesheet', href='/stylesheets/problems.css')
     include nav
     div.col-md-9
-        h2(style='position: relative;text-align: center')
+        h3(style='position: relative;text-align: center')
             - if (doc && doc.title)
                 | #{doc.title}
+        center
+            | 时间限制: 1 Second(s)
+            br
+            | 内存限制: 256 MegaByte(s)
         h3 题目描述&nbsp;&nbsp;
             small Description
         hr
@@ -43,4 +47,33 @@ block content
                 - if (doc && doc.sampleOutput)
                     | #{doc.sampleOutput}
     div.col-md-3
+        .panel.panel-info
+            .panel-heading
+                | 题目信息
+            .panel-body
+                | 提交次数:&nbsp;&nbsp;
+                - if (doc && doc.all)
+                    - var all = doc.all;
+                    | #{doc.all}
+                - else
+                    | 0
+                br
+                | 通过次数:&nbsp;&nbsp;
+                - if (doc && doc.ac)
+                    - var ac = doc.ac;
+                    | #{doc.ac}
+                - else
+                    | 0
+                br
+                | 通过比率:&nbsp;&nbsp;
+                - if (ac && all)
+                    | #{Math.round(ac * 10000 / all) / 100}%
+                - else
+                    | 0%
+                br
+                br
+                a.btn.btn-primary.btn-large(href!='/submit/' + problemId) 提交
+                a.btn.btn-success.btn-large(href!='/status/' + problemId) 查看统计信息
+            .panel-footer
+                div(style='position: relative; text-align: right') 本题由CodeBursts!提供
 

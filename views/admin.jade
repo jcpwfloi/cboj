@@ -1,0 +1,54 @@
+extends layout
+
+block content
+    include nav
+    div.col-md-3
+        ul.nav.nav-pills.nav-stacked#tabs
+            li.active
+                a(href='#home') 运营状态
+                    span.badge 未完成
+            li
+                a(href='#params') 参数设置
+                    span.badge 未完成
+            li
+                a(href='#notice') 发布公告
+                    span.badge 未完成
+            li
+                a(href='#graph') 提交图表
+                    span.badge 未完成
+            li
+                a(href='#judger') 评测机状态
+                    span.badge 未完成
+    div.col-md-9
+        .tab-content
+            .tab-pane.fade.in.active#home
+                .panel.panel-info
+                    .panel-heading
+                        | 运营状态
+                    .panel-body
+                        | 服务器: Express.js
+                        br
+                        - var dateObj = new Date();
+                        - var dateStr = dateObj.toDateString();
+                        - var timeStr = dateObj.toTimeString();
+                        | 服务器时间: #{dateStr + ' ' + timeStr}
+                    .panel-footer
+                        div(style='text-align: right; position: relative') version: v0.1 by arcGravitus
+            .tab-pane.fade#params
+                .panel.panel-info
+                    .panel-heading
+                        | 参数设置
+                    .panel-body
+                    .panel-footer
+                        div(style='text-align: right; position: relative') version: v0.1 by arcGravitus
+            .tab-pane.fade#notice
+            .tab-pane.fade#graph
+            .tab-pane.fade#judger
+    script.
+        $(document).ready(function() {
+            $('#tabs a').click(function(e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+        });
+

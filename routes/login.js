@@ -61,7 +61,8 @@ router.post('/auth', function(req, res) {
         if (docs.pass == password) {
             req.session.user = {
                 username: username,
-                password: password
+                password: password,
+                admin: docs.admin
             };
             res.send({stat: "success"});
             res.end();
