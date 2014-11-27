@@ -45,4 +45,12 @@ router.get('/users', function(req, res) {
     });
 });
 
+router.get('/problems', function(req, res) {
+    checkAvail(req, res, function() {
+        for (x in nav) nav[x].active = false;
+        nav[2].active = true;
+        res.render('admin/problems', { title: '管理问题 - CodeBursts', nav: nav });
+    });
+});
+
 module.exports = router;

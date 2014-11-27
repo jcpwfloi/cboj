@@ -32,6 +32,28 @@ block content
                         - var dateStr = dateObj.toDateString();
                         - var timeStr = dateObj.toTimeString();
                         | 服务器时间: #{dateStr + ' ' + timeStr}
+                        br
+                        br
+                        | 服务器控制:&nbsp;&nbsp;
+                        span.badge 未实现
+                        span.badge 权限控制未加入
+                        br
+                        hr(style='margin-top: 3px; margin-bottom: 5px')
+                        a.btn.btn-success 开启
+                        a.btn.btn-danger 关闭
+                        a.btn.btn-info 重启
+                        a.btn.btn-primary(style='margin-left: 20px') 监控日志
+                        hr(style='margin-top: 5px; margin-bottom: 5px')
+                        br
+                        | 服务器后台权限分级:&nbsp;&nbsp;
+                        span.badge 未实现
+                        p(style='margin-left: 15px') 管理员: jcpwfloi, arcGravitus
+                        | 数据库备份:&nbsp;&nbsp;
+                        span.badge 未实现
+                        hr(style='margin-top: 5px; margin-bottom: 5px')
+                        a.btn.btn-success 备份
+                        a.btn.btn-danger 还原
+                        a.btn.btn-info 查看云端备份
                     .panel-footer
                         div(style='text-align: right; position: relative') version: v0.1 by arcGravitus
             .tab-pane.fade#params

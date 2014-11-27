@@ -5,7 +5,12 @@ $(document).ready(function() {
             username: username,
             password: password
         }, function(data) {
-            if (data.stat == "success") window.location.href='/';
+            if (data.stat == "success") {
+                var str = window.location.href.substr(window.location.href.length - 5, 5);
+                if (str == 'login')
+                    window.location.href='/';
+                else window.history.go(0);
+            }
             else {
                 var EMessage = '<div class="alert alert-danger">用户名或密码错误</div>';
                 $('.login-message').html(EMessage);

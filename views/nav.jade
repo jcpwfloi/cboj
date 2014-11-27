@@ -1,3 +1,7 @@
+script.
+    $(document).ready(function() {
+        $('.tooltip1').tooltip({});
+    });
 nav.navbar.navbar-default.navbar-inverse
     div.container-fluid
         div.navbar-header
@@ -8,7 +12,10 @@ nav.navbar.navbar-default.navbar-inverse
                     case navli.active
                         when false
                             li
-                                a(href!=navli.ref)= navli.name
+                                a.tooltip1(href!=navli.ref, data-toggle='tooltip', data-placement='bottom', data-original-title!=navli.name)= navli.name
+                                - //a(href!=navli.ref)= navli.name
                         when true
                             li.active
-                                a(href!=navli.ref)= navli.name
+                                a.tooltip1(href!=navli.ref, data-toggle='tooltip', data-placement='bottom', data-original-title!=navli.name)= navli.name
+                                - //a(href!=navli.ref)= navli.name
+

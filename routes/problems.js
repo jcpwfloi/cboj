@@ -5,8 +5,8 @@ var p = require('../model/problems');
 
 
 var nav = [
-	{ name: '首页', ref: '/', active: true },
-	{ name: '问题', ref: '/problem', active: false },
+	{ name: '首页', ref: '/', active: false },
+	{ name: '问题', ref: '/problem', active: true },
 	{ name: '状态', ref: '/status', active: false },
 	{ name: '比赛', ref: '/contest', active: false },
 	{ name: '排名', ref: '/ranklist', active: false }
