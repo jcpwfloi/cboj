@@ -14,6 +14,7 @@ For Linux OS:
 ```
 git clone https://github.com/joyent/node
 ./configure
+make
 make install
 ```
 
