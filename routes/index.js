@@ -10,8 +10,8 @@ var nav = [
             ];
 
 var ranklist = [
-        { name: 'JCPWFLOI', rating: 2000, level: 'master' },
-        { name: 'LXLWDGY', rating: 1500, level: 'expert' }
+        { name: 'JCPWFLOI', rating: 2000 },
+        { name: 'LXLWDGY', rating: 1500 }
             ];
 
 /* GET home page. */

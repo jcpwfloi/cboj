@@ -10,8 +10,7 @@ table.table-striped.table
         if ranklist[i] && ranklist[i].name
             tr
                 td= i + 1
-                div(class!=ranklist[i].level)
-                    td= ranklist[i].name
+                td(rating!=ranklist[i].rating)= ranklist[i].name
                 td= ranklist[i].rating
         else
             tr

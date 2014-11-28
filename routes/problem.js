@@ -15,11 +15,9 @@ var problems;
 var perPage = 50;
 
 function getProblems(pageId, callback) {
-    console.log(pageId);
     p.fetchProblems(1 + perPage * (pageId - 1), perPage, function(err, doc) {
         if (err) return;
         problems = doc;
-        console.log(doc);
         callback();
     });
 }

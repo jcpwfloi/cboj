@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var p = require('../model/problem');
 
 var db = require('../model/dbquery');
 
@@ -45,11 +46,23 @@ router.get('/users', function(req, res) {
     });
 });
 
+var perPage = 100;
+var problems = {};
+function getProblems(pageId, callback) {
+    p.fetchProblems(1 + perPage * (pageId - 1), perPage, function(err, doc) {
+        if (err) return;
+        problems = doc;
+        callback();
+    });
+}
+
 router.get('/problems', function(req, res) {
     checkAvail(req, res, function() {
         for (x in nav) nav[x].active = false;
         nav[2].active = true;
-        res.render('admin/problems', { title: '管理问题 - CodeBursts', nav: nav });
+        getProblems(1, function() {
+            res.render('admin/problems', { title: '管理问题 - CodeBursts', nav: nav, problems: problems });
+        });
     });
 });
 

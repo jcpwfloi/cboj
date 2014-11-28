@@ -13,13 +13,14 @@ var nav = [
 router.get('/', function(req, res) {
     if (!req.session.user)
         res.render('login', { title: '登陆 - CodeBursts', nav: nav });
-    else
-        res.render('submit', { problemId: '', nav: nav });
+    else {
+        var title = '提交 - CodeBursts';
+        res.render('submit', { title: title, problemId: '', nav: nav });
+    }
 });
 
 router.get('/success', function(req, res) {
-    res.send('Hello World');
-    res.end();
+    res.render('submit/success', { title: '提交成功 - CodeBursts', nav: nav });
 });
 
 router.post('/', function(req, res) {
@@ -47,7 +48,8 @@ router.get('/:problemId', function(req, res) {
         return;
     }
     var problemId = req.params.problemId;
-    res.render('submit', { problemId: problemId, nav: nav });
+    var title = problemId + ' - 提交 - CodeBursts';
+    res.render('submit', { title: title, problemId: problemId, nav: nav });
 });
 
 module.exports = router;

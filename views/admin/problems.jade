@@ -1,5 +1,58 @@
+mixin problem(d)
+    tr
+        td
+            - if (d.del)
+                a.statn.btn.btn-danger(problemId!=d.id) 不可用
+            - else
+                a.statn.btn.btn-success(problemId!=d.id) 可用
+        td= d.id
+        td
+            a(href='/admin/problems/edit/' + d.id)= d.name
+        td= d.all
+        td= d.ac
+        td
+            - if (d.all && d.ac)
+                | #{Math.round(d.ac * 10000 / d.all) / 100}%
+            - else
+                | 0%
 extends ../layout
 
 block content
     include ../nav
+    link(rel='stylesheet', href='/stylesheets/admin/adminProblem.css')
+    div.col-md-3
+        ul.nav.nav-pills.nav-stacked#tabs
+            li.active
+                a(href='#list') 问题列表
+                    span.badge Problems
+            li
+                a(href='#add') 添加问题
+                    span.badge 未完成
+            li
+                a(href='#del') 删除问题
+                    span.badge 未完成
+    div.col-md-9
+        .tab-content
+            .tab-pane.fade.in.active#list
+                h2 问题列表&nbsp;&nbsp;
+                    small ProblemSet
+                hr
+                table.table.table-striped.table-hover
+                    th(width='9%') 可用
+                    th(width='10%') #
+                    th(width='35%') 题目名字
+                    th 提交次数
+                    th 通过次数
+                    th 通过比率
+                    each p in problems
+                        + problem(p)
+            .tab-pane.fade#add
+            .tab-pane.fade#del
+    script.
+        $(document).ready(function() {
+            $('#tabs a').click(function(e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+        });
 
