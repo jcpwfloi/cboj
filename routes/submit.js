@@ -41,7 +41,7 @@ router.post('/', function(req, res) {
             var submission =
             {
                 problemId: problemId,
-                languange: language,
+                language: language,
                 code: code,
                 submissionId: sum + 1
             };
