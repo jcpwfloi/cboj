@@ -14,8 +14,11 @@ var nav = [
 
 router.get('/:problemId', function(req, res) {
     var problemId = Number(req.params.problemId);
+    var user;
+    if (req.session.user)
+        user = req.session.user;
     p.fetchProblem(problemId, function(err, doc) {
-        if (doc && doc.avail) res.render('problems', { problemId: problemId, title: problemId + ' - 问题 - CodeBursts', nav: nav, md: md, doc: doc});
+        if (doc && doc.avail) res.render('problems', { problemId: problemId, title: problemId + ' - 问题 - CodeBursts', nav: nav, md: md, doc: doc, login: user});
         else {
             var error = {status: 404, stack: '404 not found'};
             res.render('error', {error: error});

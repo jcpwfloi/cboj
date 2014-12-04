@@ -5,7 +5,7 @@ var mongodb = new mongo.Db('cboj', server, {safe: true});
 function fetchProblems(from, num, callback) {
     from += 1000;
     mongodb.open(function(err, db) {
-        if (err) callback(err, null);
+        if (err || !db) callback(err, null);
         db.collection('problems', function(err, collection) {
             if (err) {
                 mongodb.close();
@@ -26,4 +26,26 @@ function fetchProblems(from, num, callback) {
     });
 }
 
+function updateProblems(problemId, newProblem, callback) {
+    mongodb.open(function(err, db) {
+        if (err || !db) {
+            callback();
+            return;
+        }
+        db.collection('problems', function(err, collection) {
+            if (err) {
+                mongodb.close();
+                callback();
+                return;
+            }
+            collection.update({id: problemId}, {$set: newProblem}, function(err, doc) {
+                mongodb.close();
+                callback();
+            });
+        });
+    });
+}
+
 exports.fetchProblems = fetchProblems;
+exports.updateProblems = updateProblems;
+

@@ -74,6 +74,8 @@ block content
                 br
                 a.btn.btn-primary.btn-large(href!='/submit/' + problemId) 提交
                 a.btn.btn-success.btn-large(href!='/status/' + problemId) 查看统计信息
+                if (login && login.username && login.admin)
+                    a.btn.btn-info.btn-danger(href!='/admin/problems/edit/' + problemId) 编辑问题
             .panel-footer
                 div(style='position: relative; text-align: right') 本题由CodeBursts!提供
 

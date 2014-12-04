@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var p = require('../model/problem');
+var ps = require('../model/problems');
+var Step = require('step');
 
 var db = require('../model/dbquery');
 
@@ -13,14 +15,14 @@ var nav = [
 
 function checkAvail(req, res, callback) {
     if (!req.session.user) {
-        res.render('login', { nav: nav });
+        res.render('login', { title: '登陆 - CodeBursts', nav: nav });
         return;
     }
     var username = req.session.user.username;
     db.getUserByName(username, function(err, doc) {
         if (doc.admin == true) callback();
         else {
-            res.render('login', { nav: nav });
+            res.render('login', { title: '登陆 - CodeBursts', nav: nav });
             return;
         }
     });
@@ -48,10 +50,28 @@ router.get('/users', function(req, res) {
 
 var perPage = 100;
 var problems = {};
+var problem = {};
+
 function getProblems(pageId, callback) {
     p.fetchProblems(1 + perPage * (pageId - 1), perPage, function(err, doc) {
         if (err) return;
         problems = doc;
+        callback();
+    });
+}
+
+function getProblemIndex(problemId, callback) {
+    p.fetchProblems(problemId - 1000, 1, function(err, doc) {
+        if (err) return;
+        if (doc) callback(err, doc[0]);
+        else callback(err, null);
+    });
+}
+
+function getProblem(problemId, callback) {
+    ps.fetchProblem(problemId, function(err, doc) {
+        if (err) return;
+        problem = doc;
         callback();
     });
 }
@@ -66,4 +86,39 @@ router.get('/problems', function(req, res) {
     });
 });
 
+router.post('/problems/edit/submit/:problemId', function(req, res) {
+    var problemId = Number(req.params.problemId);
+    checkAvail(req, res, function() {
+        var info = {
+            description: req.param('description'),
+            input: req.param('input'),
+            output: req.param('output'),
+            sampleInput: req.param('sampleInput'),
+            sampleOutput: req.param('sampleOutput'),
+            title: req.param('title')
+        };
+        ps.updateProblem(problemId, info, function() {
+            res.redirect('back');
+        });
+    });
+});
+
+router.get('/problems/edit/:problemId', function(req, res) {
+    checkAvail(req, res, function() {
+        for (x in nav) nav[x].active = false;
+        nav[2].active = true;
+        var problemId = req.params.problemId;
+        Step(
+            function() {
+                getProblemIndex(Number(problemId), this.parallel());
+                getProblem(Number(problemId), this.parallel());
+            },
+            function(err, doc) {
+                res.render('admin/editProblems', { title: problemId + ' - 编辑问题 - CodeBursts', nav: nav, problem: problem, problemIndex: doc });
+            }
+        );
+    });
+});
+
 module.exports = router;
+

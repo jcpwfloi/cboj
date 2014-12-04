@@ -27,7 +27,7 @@ block content
                     span.badge Problems
             li
                 a(href='#add') 添加问题
-                    span.badge 未完成
+                    span.badge Add Problems
             li
                 a(href='#del') 删除问题
                     span.badge 未完成
@@ -47,6 +47,33 @@ block content
                     each p in problems
                         + problem(p)
             .tab-pane.fade#add
+                h2 添加问题&nbsp;&nbsp;
+                    small Add Problems
+                hr
+                form(action='/admin/problems/add', method='POST')
+                    | 问题索引：
+                    input.form-control(name='name')
+                    br
+                    | 题目名称：
+                    input.form-control(name='title')
+                    br
+                    | 题目描述：
+                    textarea.form-control(rows='4', name='description')
+                    br
+                    | 输入格式：
+                    textarea.form-control(rows='4', name='input')
+                    br
+                    | 输出格式：
+                    textarea.form-control(rows='4', name='output')
+                    br
+                    | 样例输入：
+                    textarea.form-control(rows='4', name='sampleInput')
+                    br
+                    | 样例输出：
+                    textarea.form-control(rows='4', name='sampleOutput')
+                    br
+                    input.form-control(type='submit', value='添加', style='width: 60px')
+                    br
             .tab-pane.fade#del
     script.
         $(document).ready(function() {

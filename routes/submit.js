@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var cr = require('../model/core');
+var fs = require('fs');
+var cp = require('child_process');
+var Step = require('step');
+var judger = require('../model/judger');
 
 var nav = [
 	{ name: '首页', ref: '/', active: true },
@@ -29,17 +33,27 @@ router.post('/', function(req, res) {
     var problemId = req.param('problemId');
     var language = req.param('Language');
     var code = req.param('code');
-    cr.querySubmissionNum(function(err, doc) {
-        var submissionNum;
-        if (!doc) submissionNum = 0; else submissionNum = doc.value;
-        //TODO add a submission, lun xun! (wo yi jing fang qi zhi liao le)
-        var submission = {
-            problemId: problemId,
-            language: language,
-            code: code,
-            submissionId: submissionNum + 1
-        };
-    });
+    Step(
+        function() {
+            cr.querySubmissionNum(this);
+        },
+        function(err, sum) {
+            var submission =
+            {
+                problemId: problemId,
+                languange: language,
+                code: code,
+                submissionId: sum + 1
+            };
+            cr.addSubmission(submission, this);
+        },
+        function() {
+            fs.exists(__dirname + '/../../judger/judge.lock', this);
+        },
+        function(exists) {
+            if (!exists) judger.doJudge();
+        }
+    );
 });
 
 router.get('/:problemId', function(req, res) {
