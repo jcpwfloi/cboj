@@ -24,10 +24,19 @@ router.get('/', function(req, res) {
 });
 
 router.get('/success', function(req, res) {
-    res.render('submit/success', { title: '提交成功 - CodeBursts', nav: nav });
+    res.render('submit/success', { title: '提交成功 - CodeBursts', nav: nav     });
+});
+
+router.get('/failure', function(req, res) {
+    res.render('submit/failure', { title: '提交失败 - CodeBursts', nav: nav     });
 });
 
 router.post('/', function(req, res) {
+    if (!req.session.user) {
+        res.redirect(301, '/submit/failure');
+        res.end();
+        return;
+    }
     res.redirect(301, '/submit/success');
     res.end();
     var problemId = req.param('problemId');
@@ -43,7 +52,8 @@ router.post('/', function(req, res) {
                 problemId: problemId,
                 language: language,
                 code: code,
-                submissionId: sum + 1
+                submissionId: sum + 1,
+                user: req.session.user.username
             };
             cr.addSubmission(submission, this);
         },
