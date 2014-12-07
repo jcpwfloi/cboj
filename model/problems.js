@@ -69,7 +69,8 @@ function addProblem(newProblem, callback) {
                 id: newProblem.id,
                 name: newProblem.name,
                 ac: 0,
-                all: 0
+                all: 0,
+                avail: true
             };
             collection.insert(problems, this);
         },

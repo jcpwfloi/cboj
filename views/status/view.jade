@@ -32,10 +32,11 @@ block content
                 pre(class='brush: cpp;')= doc.code
             when '1'
                 pre(class='brush: delphi;')= doc.code
-        h3 编译信息&nbsp;&nbsp;
-            small Compiler Message
-        hr
-        pre= doc.compilerMessage
+        if doc.compilerMessage
+            h3 编译信息&nbsp;&nbsp;
+                small Compiler Message
+            hr
+            pre= doc.compilerMessage
         h3 数据点状态&nbsp;&nbsp;
             small Data Status
         hr

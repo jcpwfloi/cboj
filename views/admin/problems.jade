@@ -1,10 +1,10 @@
 mixin problem(d)
     tr
         td
-            - if (d.del)
-                a.statn.btn.btn-danger(problemId!=d.id) 不可用
-            - else
+            - if (d.avail)
                 a.statn.btn.btn-success(problemId!=d.id) 可用
+            - else
+                a.statn.btn.btn-danger(problemId!=d.id) 不可用
         td= d.id
         td
             a(href='/admin/problems/edit/' + d.id)= d.name
@@ -75,11 +75,5 @@ block content
                     input.form-control(type='submit', value='添加', style='width: 60px')
                     br
             .tab-pane.fade#del
-    script.
-        $(document).ready(function() {
-            $('#tabs a').click(function(e) {
-                e.preventDefault();
-                $(this).tab('show');
-            });
-        });
+    script $(document).ready(function(){$('#tabs a').click(function(e){e.preventDefault();$(this).tab('show');});});
 
