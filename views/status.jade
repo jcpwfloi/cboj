@@ -1,8 +1,10 @@
 mixin giveTable(stat)
     tr
-        td= stat.submissionId
+        td
+            a.btn.btn-primary.btnsmall(href!='/status/' + stat.submissionId)= stat.submissionId
         td= stat.user
-        td= stat.problemId
+        td
+            a(href!='/problems/' + stat.problemId)= stat.problemId
         case stat.language
             when '0'
                 td C++
@@ -12,19 +14,26 @@ mixin giveTable(stat)
             when undefined
                 td 等待评测
             when 0
-                td 答案正确
+                td
+                    a.btn.btn-success.btnsmall 答案正确
             when 1
-                td 错误的答案
+                td
+                    a.btn.btn-danger.btnsmall 错误的答案
             when 2
-                td 超过时间限制
+                td
+                    a.btn.btn-warning.btnsmall 超过时间限制
             when 3
-                td 运行时错误
+                td
+                    a.btn.btn-warning.btnsmall 运行时错误
             when 4
-                td 编译错误
+                td
+                    a.btn.btn-default.btnsmall 编译错误
+        td= stat.score
 extends layout
 
 block content
     include nav
+    link(rel='stylesheet', href='/stylesheets/status.css')
     .col-md-9
         h3 状态显示&nbsp;&nbsp;
             small Status
@@ -36,7 +45,8 @@ block content
                 th(style='width: 120px') 提交人
                 th(style='width: 80px') 题目编号
                 th(style='width: 60px') 语言
-                th 状态
+                th(style='width: 150px') 状态
+                th 分数
             each stat in status
                 + giveTable(stat)
     .col-md-3

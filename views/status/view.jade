@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+    include ../nav
+    script(src='/sh/scripts/shCore.js')
+    case doc.language
+        when '0'
+            script(src='/sh/scripts/shBrushCpp.js')
+        when '1'
+            script(src='/sh/scripts/shBrushDelphi.js')
+    link(rel='stylesheet' href='/sh/styles/shCoreDefault.css')
+    .col-md-9
+        h3 提交的代码&nbsp;&nbsp;
+            small Submitted Code
+        hr
+        case doc.language
+            when '0'
+                pre(class='brush: cpp;')= doc.code
+            when '1'
+                pre(class='brush: delphi;')= doc.code
+    .col-md-3
+    script SyntaxHighlighter.all()
+

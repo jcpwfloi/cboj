@@ -33,11 +33,11 @@ router.get('/failure', function(req, res) {
 
 router.post('/', function(req, res) {
     if (!req.session.user) {
-        res.redirect(301, '/submit/failure');
+        res.redirect(302, '/submit/failure');
         res.end();
         return;
     }
-    res.redirect(301, '/submit/success');
+    res.redirect(302, '/status');
     res.end();
     var problemId = req.param('problemId');
     var language = req.param('Language');
@@ -61,7 +61,9 @@ router.post('/', function(req, res) {
             fs.exists(__dirname + '/../../judger/judge.lock', this);
         },
         function(exists) {
-            if (!exists) judger.doJudge();
+            if (!exists) {
+                judger.doJudge();
+            }
         }
     );
 });

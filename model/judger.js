@@ -4,34 +4,66 @@ var db = new mongo.Db('cboj', server, {safe: true});
 var Step = require('step');
 var fs = require('fs');
 var cp = require('child_process');
-var problemId, filelist = [], child, timer, flag, id, result = [];
+var problemId, filelist = [], child, timer, flag, id, result = [], score;
 
 db.open(function(err, db) {});
 
-function endtle() {
+function endwa(callback) {
     db.collection('submissions', function(err, collection) {
-        if (err) return;
-        collection.update({submissionId: id}, {$set: {status: 2}}, function(err, doc) {
-        });
-    });
-    db.collection('core', function(err, collection) {
-        if (err) return;
-        collection.update({name: 'completedTotal'}, {$inc: {value: 1}}, function(err, doc) {
-            doJudge();
+        collection.update({submissionId: id}, {$set: {status: 1}}, function(err, doc) {
+            db.collection('core', function(err, collection) {
+                collection.update({name: 'completedTotal'}, {$inc: {value: 1}}, function(err, doc) {
+                    callback();
+                });
+            });
         });
     });
 }
 
-function endce() {
+function endre(callback) {
     db.collection('submissions', function(err, collection) {
-        if (err) return;
-        collection.update({submissionId: id}, {$set: {status: 4}}, function(err, doc) {
+        collection.update({submissionId: id}, {$set: {status: 3}}, function(err, doc) {
+            db.collection('core', function(err, collection) {
+                collection.update({name: 'completedTotal'}, {$inc: {value: 1}}, function(err, doc) {
+                    callback();
+                });
+            });
         });
     });
-    db.collection('core', function(err, collection) {
-        if (err) return;
-        collection.update({name: 'completedTotal'}, {$inc: {value: 1}}, function(err, doc) {
-            doJudge();
+}
+
+function endtle(callback) {
+    db.collection('submissions', function(err, collection) {
+        collection.update({submissionId: id}, {$set: {status: 2}}, function(err, doc) {
+            db.collection('core', function(err, collection) {
+                collection.update({name: 'completedTotal'}, {$inc: {value: 1}}, function(err, doc) {
+                    callback();
+                });
+            });
+        });
+    });
+}
+
+function endce(callback) {
+    db.collection('submissions', function(err, collection) {
+        collection.update({submissionId: id}, {$set: {status: 4}}, function(err, doc) {
+            db.collection('core', function(err, collection) {
+                collection.update({name: 'completedTotal'}, {$inc: {value: 1}}, function(err, doc) {
+                    callback();
+                });
+            });
+        });
+    });
+}
+
+function endac(callback) {
+    db.collection('submissions', function(err, collection) {
+        collection.update({submissionId: id}, {$set: {status: 0}}, function(err, doc) {
+            db.collection('core', function(err, collection) {
+                collection.update({name: 'completedTotal'}, {$inc: {value: 1}}, function(err, doc) {
+                    callback();
+                });
+            });
         });
     });
 }
@@ -76,7 +108,7 @@ function getSubmission(submissionId, callback) {
 }
 
 function endProgram() {
-    cp.exec('rm -f ' + __dirname + '/../../judger/judge.lock', function(err, stdout, stderr) {
+    cp.exec('rm -f ' + __dirname + '/../../judger/judge.lock ' + __dirname + '/../../judger/code.exe ' + __dirname + '/../../judger/code.cpp ' + __dirname + '/../../judger/code.pas', function(err, stdout, stderr) {
     });
 }
 
@@ -113,7 +145,9 @@ Step(
     function(err, stdout, stderr) {
         console.log(err, stdout, stderr);
         if (err) {
-            endce();
+            endce(function() {
+                doJudge();
+            });
         } else shit();
     }
 );
@@ -140,6 +174,7 @@ Step(
             var datapath = __dirname + '/../../judger/data/' + String(problemId) + '/';
             var files = fs.readdirSync(datapath);
             var regin = /\.in/, regout = /\.out/;
+            filelist = [];
             for (var i = 0; i < files.length; ++ i) {
                 var name = files[i];
                 if (regin.test(name)) {
@@ -153,32 +188,100 @@ Step(
             var execpath = __dirname + '/../../judger/code.exe';
             var outpath = __dirname + '/../../judger/tempout';
             var datapath = __dirname + '/../../judger/data/' + String(problemId) + '/';
+            console.log(filelist, filelist.length);
+            result = [];
+            var shit = this;
             function run(i) {
-                if (i >= filelist.length) return;
-                Step(
-                    function() {
-                        var inputpath = datapath + filelist[i] + '.in';
-                        var anspath = datapath + filelist[i] + '.out';
-                        child = cp.exec(execpath + ' < ' + inputpath + ' > ' + outpath, {timeout: 1000}, this);
-                    },
-                    function(err, stdout, stderr) {
-                        //console.log(err, stdout, stderr);
-                        if (err && err.killed && err.signal == 'SIGTERM') {
-                            console.log('tle');
-                            endtle();
-                            return;
-                        } else {
-                            console.log('not tle');
-                            this();
+                console.log('run', i);
+                if (i >= filelist.length) {
+                    shit();
+                    return;
+                } else {
+                    var inputpath = datapath + filelist[i] + '.in';
+                    var anspath = datapath + filelist[i] + '.out';
+                    Step(
+                        function() {
+                            child = cp.exec(execpath + ' < ' + inputpath + ' > ' + outpath, {timeout: 1000}, this);
+                        },
+                        function(err, stdout, stderr) {
+                            console.log(err, stdout, stderr);
+                            if (err && err.killed && err.signal == 'SIGTERM') {
+                                console.log('tle');
+                                result.push(2);
+                                run(i + 1);
+                                return;
+                            } else if (err && !err.killed && err.signal != 'SIGTERM') {
+                                console.log('re');
+                                result.push(3);
+                                run(i + 1);
+                                return;
+                            } else {
+                                console.log('not tle');
+                                this();
+                            }
+                        }, function() {
+                            cp.exec('diff -w -B -q ' + outpath + ' ' + anspath, this);
+                        }, function(err, stdout, stderr) {
+                            if (!err) {
+                                result.push(0);
+                                run(i + 1);
+                                return;
+                            } else {
+                                result.push(1);
+                                run(i + 1);
+                                return;
+                            }
                         }
-                    }, function() {
-                    }
-                );
+                    );
+                }
             }
             run(0);
+        },
+        function() {
+            var shit = this;
+            var correctNum = 0;
+            for (var i = 0; i < result.length; ++ i) {
+                if (!result[i]) ++ correctNum;
+            }
+            if (result.length) score = Math.round(correctNum * 100 / result.length);
+            else score = 0;
+            if (score == 100) endac(shit);
+            else {
+                var tempnum = 0;
+                for (var i = 0; i < result.length; ++ i)
+                    if (result[i]) {
+                        tempnum = result[i];
+                        break;
+                    }
+                if (tempnum == 1) {
+                    endwa(shit);
+                } else if (tempnum == 2) {
+                    endtle(shit);
+                } else if (tempnum == 3) {
+                    endre(shit);
+                } else {
+                    endwa(shit);
+                }
+            }
+        },
+        function() {
+            giveResult(result, score, this);
+        },
+        function() {
+            doJudge();
         }
     );
 }
 
+function giveResult(result, score, callback) {
+    console.log(result, score);
+    db.collection('submissions', function(err, collection) {
+        collection.update({submissionId: id}, {$set: {result: result, score: score}}, function(err, doc) {
+            callback();
+        });
+    });
+}
+
 exports.doJudge = doJudge;
+exports.getSubmission = getSubmission;
 
