@@ -143,12 +143,16 @@ Step(
         cp.exec('g++ -o ' + execpath + ' ' + pathname + ' -DONLINE_JUDGE -lm', this)
     },
     function(err, stdout, stderr) {
-        console.log(err, stdout, stderr);
-        if (err) {
-            endce(function() {
-                doJudge();
+        var werr = err;
+        db.collection('submissions', function(err, collection) {
+            collection.update({submissionId: id}, {$set: {compilerMessage: stderr}}, function(err, doc) {
+                if (werr) {
+                    endce(function() {
+                        doJudge();
+                    });
+                } else shit();
             });
-        } else shit();
+        });
     }
 );
             } else if (doc.language == 1) { //pas
@@ -162,12 +166,22 @@ Step(
         cp.exec('fpc -o' + execpath + ' ' + pathname, this);
     },
     function(err, stdout, stderr) {
-        if (err) {
-            endce();
-        } else shit();
+        var werr = err;
+        db.collection('submissions', function(err, collection) {
+            collection.update({submissionId: id}, {$set: {compilerMessage: stdout}}, function(err, doc) {
+                if (werr) {
+                    endce(function() {
+                        doJudge();
+                    });
+                } else shit();
+            });
+        });
     }
 );
             } else {
+                endce(function() {
+                    doJudge();
+                });
             }
         },
         function() {

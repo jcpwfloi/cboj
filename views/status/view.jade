@@ -32,6 +32,10 @@ block content
                 pre(class='brush: cpp;')= doc.code
             when '1'
                 pre(class='brush: delphi;')= doc.code
+        h3 编译信息&nbsp;&nbsp;
+            small Compiler Message
+        hr
+        pre= doc.compilerMessage
         h3 数据点状态&nbsp;&nbsp;
             small Data Status
         hr
@@ -39,7 +43,8 @@ block content
             tr
                 th(style='width: 100px') 数据点编号
                 th 数据点状态
-            - for (var i = 0; i < doc.result.length; ++ i)
+            - var len = doc.result ? doc.result.length : 0;
+            - for (var i = 0; i < len; ++ i)
                 + giveStatus(i, doc.result[i])
     .col-md-3
     script SyntaxHighlighter.all()

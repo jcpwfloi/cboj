@@ -26,7 +26,8 @@ router.get('/:submissionId', function(req, res) {
             judger.getSubmission(Number(submissionId), this);
         },
         function(err, doc) {
-            if (req.session.user && doc && req.session.user.username == doc.user) {
+            console.log(doc);
+            if (req.session.user && doc && (req.session.user.username == doc.user || req.session.user.admin)) {
                 res.render('status/view', { nav: nav, title: submissionId + ' - 记录 - CodeBursts', doc: doc});
             } else res.redirect(302, '/status');
         }

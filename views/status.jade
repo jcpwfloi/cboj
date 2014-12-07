@@ -10,6 +10,12 @@ mixin giveTable(stat)
                 td C++
             when '1'
                 td Pascal
+            when '2'
+                td Python 2
+            when '3'
+                td Java
+            when '4'
+                td JavaScript
         case stat.status
             when undefined
                 td 等待评测
@@ -44,7 +50,7 @@ block content
                 th(style='width: 80px') 提交编号
                 th(style='width: 120px') 提交人
                 th(style='width: 80px') 题目编号
-                th(style='width: 60px') 语言
+                th(style='width: 80px') 语言
                 th(style='width: 150px') 状态
                 th 分数
             each stat in status

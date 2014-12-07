@@ -86,6 +86,24 @@ router.get('/problems', function(req, res) {
     });
 });
 
+router.post('/problems/add', function(req, res) {
+    checkAvail(req, res, function() {
+        var info = {
+            name: req.param('index'),
+            description: req.param('description'),
+            input: req.param('input'),
+            output: req.param('output'),
+            sampleInput: req.param('sampleInput'),
+            sampleOutput: req.param('sampleOutput'),
+            title: req.param('title'),
+            avail: true
+        };
+        ps.addProblem(info, function() {
+            res.redirect('back');
+        });
+    });
+});
+
 router.post('/problems/edit/submit/:problemId', function(req, res) {
     var problemId = Number(req.params.problemId);
     checkAvail(req, res, function() {
@@ -95,7 +113,7 @@ router.post('/problems/edit/submit/:problemId', function(req, res) {
             output: req.param('output'),
             sampleInput: req.param('sampleInput'),
             sampleOutput: req.param('sampleOutput'),
-            title: req.param('title')
+            title: req.param('title'),
         };
         ps.updateProblem(problemId, info, function() {
             res.redirect('back');
