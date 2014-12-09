@@ -234,7 +234,7 @@ Step(
                                 this();
                             }
                         }, function() {
-                            cp.exec('diff -w -B -q ' + outpath + ' ' + anspath, this);
+                            cp.exec('diff -w -B -q ' + outpath + ' ' + anspath + '; rm -f ' + outpath, this);
                         }, function(err, stdout, stderr) {
                             if (!err) {
                                 result.push(0);
