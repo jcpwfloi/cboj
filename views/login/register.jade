@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+    script(src='/javascripts/login/register.js')
+    include ../nav
+    .container-fluid
+        .col-md-4
+        .col-md-4
+            .col-md-2
+            .col-md-8
+                div.register-message
+                    br
+                    br
+                .form-group
+                    label 用户名
+                    input.form-control#user(type='email')
+                .form-group
+                    label 密码
+                    input.form-control#pass(type='password')
+                .form-group
+                    label 重复密码
+                    input.form-control#reppass(type='password')
+                .form-group
+                    label 邀请码
+                    input.form-control#invite(type='text')
+                .checkbox
+                    label
+                        input(type='checkbox')
+                        | 同意以下
+                        a(href='/tos') 协议
+                button.btn.btn-default#submit 注册
+                button.btn.btn-success.disabled GitHub登陆(未开通)
+

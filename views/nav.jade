@@ -1,0 +1,18 @@
+script $(document).ready(function(){$('.tooltip1').tooltip({});});
+nav.navbar.navbar-default.navbar-inverse
+    div.container-fluid
+        div.navbar-header
+            a.navbar-brand(href='/') CodeBursts
+        div.collapse.navbar-collapse
+            ul.nav.navbar-nav
+                - each navli in nav
+                    case navli.active
+                        when false
+                            li
+                                a.tooltip1(href!=navli.ref, data-toggle='tooltip', data-placement='bottom', data-original-title!=navli.name)= navli.name
+                                - //a(href!=navli.ref)= navli.name
+                        when true
+                            li.active
+                                a.tooltip1(href!=navli.ref, data-toggle='tooltip', data-placement='bottom', data-original-title!=navli.name)= navli.name
+                                - //a(href!=navli.ref)= navli.name
+

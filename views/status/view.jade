@@ -1,0 +1,52 @@
+mixin giveStatus(id, stat)
+    tr
+        td= id
+        case stat
+            when 0
+                td Accepted
+            when 1
+                td Wrong Answer
+            when 2
+                td Time limit Exceeded
+            when 3
+                td Runtime Error
+            when 4
+                td Compile Error
+extends ../layout
+
+block content
+    include ../nav
+    .col-md-9
+        h3 提交的代码&nbsp;&nbsp;
+            small Submitted Code
+        hr
+        case doc.language
+            when '0'
+                pre
+                    code.sh_cpp= doc.code
+            when '1'
+                pre
+                    code.sh_pas= doc.code
+            when '2'
+                pre
+                    code.sh_py= doc.code
+            when '4'
+                pre
+                    code.sh_js= doc.code
+        if doc.compilerMessage
+            h3 编译信息&nbsp;&nbsp;
+                small Compiler Message
+            hr
+            pre= doc.compilerMessage
+        h3 数据点状态&nbsp;&nbsp;
+            small Data Status
+        hr
+        table.table.table-striped
+            tr
+                th(style='width: 100px') 数据点编号
+                th 数据点状态
+            - var len = doc.result ? doc.result.length : 0;
+            - for (var i = 0; i < len; ++ i)
+                + giveStatus(i, doc.result[i])
+    .col-md-3
+

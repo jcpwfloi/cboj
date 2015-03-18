@@ -1,0 +1,18 @@
+mixin giveTable(i)
+    tr
+        td
+            center
+                a(href!='/admin/serverControl/logs/' + i)= i
+extends ../layout
+
+block content
+    include ../nav
+    .container-fluid
+        .col-md-2
+        table.table.table-striped(style='width:30%')
+            tr
+                th
+                    center 文件名
+            each i in files
+                + giveTable(i)
+    

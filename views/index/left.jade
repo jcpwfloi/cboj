@@ -1,0 +1,26 @@
+mixin notice(data)
+    .panel.panel-info
+        .panel-heading
+        .panel-body
+        .panel-footer
+div.jumbotron
+    h1 CodeBursts!
+    p 这是一个非盈利性的程序在线评测系统
+    p
+        if !login || !login.username
+            a.btn.btn-primary.btn-lg(href='/login/register') 点此注册
+            a.btn.btn-success.btn-lg(href='/login') 点此登陆
+        else
+            a.btn.btn-primary.btn-lg(href='#') 欢迎您，
+                span(style='font-family: courier') #{login.username}
+            a.btn.btn-success.btn-lg(href='/login/logout', style='margin-left: 10px') 登出
+            if login.admin
+                a.btn.btn-danger.btn-lg(href='/admin', style='margin-left: 10px') 进入管理后台
+h2 &nbsp;&nbsp;公告&nbsp;&nbsp;&nbsp;
+    small notice
+hr
+
+if notice && notice.cnt
+    - for (var i = 0; i < notice.cnt; ++ i)
+else
+    h5(align='center') 木有公告

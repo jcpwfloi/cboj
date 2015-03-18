@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+    include ../nav
+    .container-fluid
+        h3 err
+            pre= err
+        h3 stdout
+            pre= stdout
+        h3 stderr
+            pre= stderr
+

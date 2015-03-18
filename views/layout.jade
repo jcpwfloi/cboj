@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title= title
+    meta(http-equiv='Content-Type' content='text/html; charset=utf8')
+    script(src='http://libs.baidu.com/jquery/1.9.0/jquery.js')
+    script(src='/javascripts/jquery.md5.js')
+    script(src='http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.js')
+    script(src='/javascripts/rating.js')
+    script(src='//cdnjscn.b0.upaiyun.com/libs/mathjax/2.4.0/MathJax.js?config=TeX-AMS_HTML')
+    script(type='text/x-mathjax-config')
+    script.
+        MathJax.Hub.Config({
+            showProcessingMessages: false,
+            tex2jax: {
+                inlineMath: [["$", "$"]],
+                processEscapes: true
+            },
+            menuSettings: {
+                zoom: "Hover"
+            },
+            messageStyle: "none"
+        });
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    block content

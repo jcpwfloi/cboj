@@ -1,0 +1,20 @@
+h3 分数排名&nbsp;&nbsp;&nbsp;
+    small rating ranklist
+hr
+table.table-striped.table
+    tr
+        th(width='70px') #
+        th name
+        th rating
+    - for (var i = 0; i < 10; ++ i)
+        if ranklist[i] && ranklist[i].name
+            tr
+                td= i + 1
+                td(rating!=ranklist[i].rating)= ranklist[i].name
+                td= ranklist[i].rating
+        else
+            tr
+                td= i + 1
+                td /
+                td /
+

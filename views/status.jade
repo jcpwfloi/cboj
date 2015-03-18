@@ -1,0 +1,67 @@
+mixin giveTable(stat)
+    tr
+        td
+            a.btn.btn-primary.btnsmall(href!='/status/' + stat.submissionId)= stat.submissionId
+        td
+            a(href!='/status/user/' + stat.user)= stat.user
+        td
+            a(href!='/problems/' + stat.problemId)= stat.problemId
+        case stat.language
+            when '0'
+                td C++
+            when '1'
+                td Pascal
+            when '2'
+                td Python 2
+            when '3'
+                td Java
+            when '4'
+                td JavaScript
+        case stat.status
+            when undefined
+                td 等待评测
+            when 0
+                td
+                    a.btn.btn-success.btnsmall 答案正确
+            when 1
+                td
+                    a.btn.btn-danger.btnsmall 错误的答案
+            when 2
+                td
+                    a.btn.btn-warning.btnsmall 超过时间限制
+            when 3
+                td
+                    a.btn.btn-warning.btnsmall 运行时错误
+            when 4
+                td
+                    a.btn.btn-default.btnsmall 编译错误
+            when 5
+                td 正在评测....
+        td= stat.score
+        if stat.usedTime
+            td= stat.usedTime.toString() + 'ms'
+        else
+            td /
+extends layout
+
+block content
+    include nav
+    link(rel='stylesheet', href='/stylesheets/status.css')
+    .col-md-9
+        h3 状态显示&nbsp;&nbsp;
+            small Status
+        hr(style='margin: 0 0 0 0')
+        br
+        table.table-striped.table
+            tr
+                th(style='width: 80px') 提交编号
+                th(style='width: 120px') 提交人
+                th(style='width: 80px') 题目编号
+                th(style='width: 80px') 语言
+                th(style='width: 150px') 状态
+                th(style='width: 60px') 分数
+                th 用时
+            each stat in status
+                + giveTable(stat)
+    .col-md-3
+

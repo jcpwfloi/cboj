@@ -1,0 +1,33 @@
+mixin problem(d)
+    tr(class!=d.styl)
+        td= d.stat
+        td= d.id
+        td
+            a(href!='/problems/' + d.id)= d.name
+        td= d.all
+        td= d.ac
+        td
+            - if (d.all && d.ac)
+                | #{Math.round(d.ac * 10000 / d.all) / 100}%
+            - else
+                | 0%
+
+extends layout
+
+block content
+    include nav
+    div.col-md-9
+        h2 问题列表&nbsp;&nbsp;
+            small problemset
+        hr
+        table.table.table-striped.table-hover
+            th(width='9%') 状态
+            th(width='10%') #
+            th(width='35%') 题目名字
+            th 提交次数
+            th 通过次数
+            th 通过比率
+            each p in problems
+                + problem(p)
+    div.col-md-3
+

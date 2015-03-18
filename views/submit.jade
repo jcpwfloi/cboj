@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    include nav
+    .col-md-3
+    .col-md-6
+        form(action='/submit', method='POST')
+            br
+            | 题目编号&nbsp;&nbsp;
+            span.badge Problem Id
+            input.form-control(type='text', name='problemId', value!=problemId, style='width: 200px; margin-top: 5px; margin-bottom: 5px')
+            | 语言选择&nbsp;&nbsp;
+            span.badge Language
+            select.form-control(name='Language', style='width: 200px; margin-top: 5px; margin-bottom: 5px')
+                option(value='0') GNU C++
+                option(value='1') Pascal
+                option(value='2') Python 2
+                option(value='3') Java
+                option(value='4') Node.js
+            | 程序提交&nbsp;&nbsp;
+            textarea.form-control(name='code', rows='15')
+            br
+            input.form-control(type='submit', value='提交', style='width: 60px')
+    .col-md-3
+

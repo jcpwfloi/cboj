@@ -1,0 +1,74 @@
+extends ../layout
+
+block content
+    include ../nav
+    link(rel='stylesheet', href='/stylesheets/editProblem.css')
+    .col-md-3
+        ul.nav.nav-pills.nav-stacked#tabs
+            li.active
+                a#detailA(href='#detail') 编辑问题
+            li
+                a(href='#list') 编辑问题索引
+    .col-md-9
+        .tab-content
+            .tab-pane.fade#list
+                form(action!='/admin/problems/edit/submitIndex/' + problem.id, method='POST')
+                    | 题目编号：#{problem.id}&nbsp;&nbsp;&nbsp;
+                    a(href!='/problems/' + problem.id) 预览
+                    hr.HR
+                    | 索引名字：
+                    input.form-control(type='text', name='name', value!=problemIndex.name)
+            .tab-pane.fade.in.active#detail
+                form(action!='/admin/problems/edit/submit/' + problem.id, method='POST')
+                    | 题目编号：#{problem.id}&nbsp;&nbsp;&nbsp;
+                    a(href!='/problems/' + problem.id) 预览
+                    br
+                    | 可用性：
+                    if problem.avail
+                        a.btn.btn-success.smallI 可用
+                    else
+                        a.btn.btn-danger.smallI 不可用
+                    br
+                    br
+                    h4.smallB 题目名称&nbsp;&nbsp;
+                        small Title
+                    hr.smallB.HR
+                    textarea.form-control(name='title', rows='1')= problem.title
+                    br
+                    br
+                    h4.smallB 题目描述&nbsp;&nbsp;
+                        small Description
+                    hr.smallB.HR
+                    textarea.form-control(name='description', rows='4')= problem.description 
+                    br
+                    h4.smallB 输入格式&nbsp;&nbsp;
+                        small Input
+                    hr.smallB.HR
+                    textarea.form-control(name='input', rows='4')= problem.input 
+                    br
+                    h4.smallB 输出格式&nbsp;&nbsp;
+                        small Output
+                    hr.smallB.HR
+                    textarea.form-control(name='output', rows='4')= problem.output 
+                    br
+                    h4.smallB 样例输入&nbsp;&nbsp;
+                        small Sample Input
+                    hr.smallB.HR
+                    textarea.form-control(name='sampleInput', rows='4')= problem.sampleInput
+                    br
+                    h4.smallB 样例输出&nbsp;&nbsp;
+                        small Sample Output
+                    hr.smallB.HR
+                    textarea.form-control(name='sampleOutput', rows='4')= problem.sampleOutput 
+                    br
+                    input.form-control(type='submit', value='提交', style='width: 60px')
+                    br
+    script.
+        $(document).ready(function() {
+            $('#tabs a').click(function(e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+        });
+
+
