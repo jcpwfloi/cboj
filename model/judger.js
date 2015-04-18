@@ -2,6 +2,7 @@ var mongo = require('mongodb').MongoClient;
 var Step = require('step');
 var fs = require('fs');
 var cp = require('child_process');
+var utils = require('../utils/stats');
 var problemId, filelist = [], child, timer, flag, id, result = [], score, startTime, endTime;
 
 function endwa(callback) {
@@ -134,6 +135,10 @@ function endProgram() {
 
 function doJudge() {
     Step(
+        function() {
+            utils.exec();
+            this();
+        },
         function() {
             cp.exec('touch ' + __dirname + '/../../judger/judge.lock', this);
         },

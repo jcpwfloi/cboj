@@ -23,22 +23,32 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // session support
+app.use(cookieParser());
 app.use(session({
     resave: false,
     saveUninitialized: true,
-    secret: 'iueh87827HFUHF',
+    secret: 'rhfhgGG77488aguriuy2875',
+	proxy: 'true',
     store: new RedisStore({
-            host: '127.0.0.1',
+            host: '901523a3e35211e4.m.cnhza.kvstore.aliyuncs.com',
+            pass: '901523a3e35211e4:Czr88159080',
             port: '6379'
         })
-    }));
+	/*store: require('sessionstore').createSessionStore({
+		type: 'redis',
+        host: '901523a3e35211e4.m.cnhza.kvstore.aliyuncs.com',
+		port: 6379,
+		prefix: 'sess',
+        ttl: 804600,
+        timeout: 10000
+	})*/
+}));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 

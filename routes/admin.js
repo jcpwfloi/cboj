@@ -16,14 +16,14 @@ var nav = [
 
 function checkAvail(req, res, callback) {
     if (!req.session.user) {
-        res.render('login', { title: '登陆 - CodeBursts', nav: nav });
+        res.render('login', { title: '登陆 - CodeBursts!', nav: nav });
         return;
     }
     var username = req.session.user.username;
     db.getUserByName(username, function(err, doc) {
         if (doc.admin == true) callback();
         else {
-            res.render('login', { title: '登陆 - CodeBursts', nav: nav });
+            res.render('login', { title: '登陆 - CodeBursts!', nav: nav });
             return;
         }
     });
@@ -35,7 +35,7 @@ router.get('/', function(req, res) {
             nav[x].active = false;
         }
         nav[0].active = true;
-        res.render('admin', { title: '管理 - CodeBursts', nav: nav });
+        res.render('admin', { title: '管理 - CodeBursts!', nav: nav });
     });
 });
 
@@ -50,7 +50,9 @@ router.get('/serverControl/:action', function(req, res) {
             }, 2000);
         }
         if (action == "backup") {
-            require('child_process').exec('mongodump; tar czf dump.tar.gz dump; rm -r dump', {cwd: '/root'}, function(err, stdout, stderr) {
+			var date = new Date();
+			var path = 'backup/' + date.getFullYear().toString() + date.getMonth().toString() + '-' + date.getDay().toString() + '_' + date.getHours().toString() + '_' + date.getMinutes().toString() + '_' + date.getSeconds().toString();
+            require('child_process').exec('mongodump; tar czf dump.tar.gz dump; rm -r dump; mkdir ' + path + '; mv dump.tar.gz ' + path, {cwd: '/root'}, function(err, stdout, stderr) {
                 res.render('admin/output', {nav: nav, err: err, stdout: stdout, stderr: stderr});
             });
         }
@@ -74,7 +76,7 @@ router.get('/users', function(req, res) {
             nav[x].active = false;
         }
         nav[1].active = true;
-        res.render('admin/users', { title: '管理用户 - CodeBursts', nav: nav});
+        res.render('admin/users', { title: '管理用户 - CodeBursts!', nav: nav});
     });
 });
 
@@ -111,7 +113,7 @@ router.get('/problems', function(req, res) {
         for (x in nav) nav[x].active = false;
         nav[2].active = true;
         getProblems(1, function() {
-            res.render('admin/problems', { title: '管理问题 - CodeBursts', nav: nav, problems: problems });
+            res.render('admin/problems', { title: '管理问题 - CodeBursts!', nav: nav, problems: problems });
         });
     });
 });
@@ -164,7 +166,7 @@ router.get('/problems/edit/:problemId', function(req, res) {
                 getProblem(Number(problemId), this.parallel());
             },
             function(err, doc) {
-                res.render('admin/editProblems', { title: problemId + ' - 编辑问题 - CodeBursts', nav: nav, problem: problem, problemIndex: doc });
+                res.render('admin/editProblems', { title: problemId + ' - 编辑问题 - CodeBursts!', nav: nav, problem: problem, problemIndex: doc });
             }
         );
     });

@@ -14,27 +14,27 @@ var nav = [
 
 router.get('/', function(req, res) {
     stats.getstats(1, function(arr) {
-        res.render('status', {status: arr, nav: nav, title: '状态 - CodeBursts'});
+        res.render('status', {status: arr, nav: nav, title: '状态 - CodeBursts!'});
     });
 });
 
 router.get('/problem/:problemId', function(req, res) {
     var problemId = req.params.problemId;
     stats.getprob(problemId, function(arr) {
-        res.render('status', {status: arr, nav: nav, title: '状态 - CodeBursts'});
+        res.render('status', {status: arr, nav: nav, title: '状态 - CodeBursts!'});
     });
 });
 
 router.get('/page/:pageId', function(req, res) {
     var pageId = req.params.pageId;
     stats.getstats(pageId, function(arr) {
-        res.render('status', {status: arr, nav: nav, title: '状态 - CodeBursts'});
+        res.render('status', {status: arr, nav: nav, title: '状态 - CodeBursts!'});
     });
 });
 
 router.get('/user/:userId', function(req, res) {
     stats.getProbByUser(req.params.userId, function(arr) {
-        res.render('status', {status: arr, nav: nav, title: '状态 - CodeBursts'});
+        res.render('status', {status: arr, nav: nav, title: '状态 - CodeBursts!'});
     });
 });
 
@@ -47,7 +47,7 @@ router.get('/:submissionId', function(req, res) {
         },
         function(err, doc) {
             if (req.session.user && doc && (req.session.user.username == doc.user || req.session.user.admin)) {
-                res.render('status/view', { nav: nav, title: submissionId + ' - 记录 - CodeBursts', doc: doc});
+                res.render('status/view', { nav: nav, title: submissionId + ' - 记录 - CodeBursts!', doc: doc});
             } else res.redirect('back');
         }
         );

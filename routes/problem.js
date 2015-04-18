@@ -12,7 +12,7 @@ var nav = [
 
 var problems; 
 
-var perPage = 50;
+var perPage = 100;
 
 function getProblems(pageId, callback) {
     p.fetchProblems(1 + perPage * (pageId - 1), perPage, function(err, doc) {
@@ -29,13 +29,13 @@ router.get('/', function(req, res) {
                 problems[i].name = '这是权限题';
             }
         }
-        res.render('problem', { title: '问题 - CodeBursts', nav: nav, problems: problems });
+        res.render('problem', { title: '问题 - CodeBursts!', nav: nav, problems: problems });
     });
 });
 
 router.get('/:pageId', function(req, res) {
     getProblems(req.params.pageId, function() {
-        res.render('problem', { title: '问题 - CodeBursts', nav: nav, problems: problems });
+        res.render('problem', { title: '问题 - CodeBursts!', nav: nav, problems: problems });
     });
 });
 

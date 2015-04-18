@@ -16,19 +16,19 @@ var nav = [
 
 router.get('/', function(req, res) {
     if (!req.session.user)
-        res.render('login', { title: '登陆 - CodeBursts', nav: nav });
+        res.render('login', { title: '登陆 - CodeBursts!', nav: nav });
     else {
-        var title = '提交 - CodeBursts';
+        var title = '提交 - CodeBursts!';
         res.render('submit', { title: title, problemId: '', nav: nav });
     }
 });
 
 router.get('/success', function(req, res) {
-    res.render('submit/success', { title: '提交成功 - CodeBursts', nav: nav     });
+    res.render('submit/success', { title: '提交成功 - CodeBursts!', nav: nav     });
 });
 
 router.get('/failure', function(req, res) {
-    res.render('submit/failure', { title: '提交失败 - CodeBursts', nav: nav     });
+    res.render('submit/failure', { title: '提交失败 - CodeBursts!', nav: nav     });
 });
 
 router.post('/', function(req, res) {
@@ -85,11 +85,11 @@ router.post('/', function(req, res) {
 
 router.get('/:problemId', function(req, res) {
     if (!req.session.user) {
-        res.render('login', { title: '登陆 - CodeBursts', nav: nav });
+        res.render('login', { title: '登陆 - CodeBursts!', nav: nav });
         return;
     }
     var problemId = req.params.problemId;
-    var title = problemId + ' - 提交 - CodeBursts';
+    var title = problemId + ' - 提交 - CodeBursts!';
     res.render('submit', { title: title, problemId: problemId, nav: nav });
 });
 

@@ -18,7 +18,7 @@ router.get('/:problemId', function(req, res) {
     if (req.session.user)
         user = req.session.user;
     p.fetchProblem(problemId, function(err, doc) {
-        if ((doc && doc.avail) || (doc && doc.avail == false && user && user.admin)) res.render('problems', { problemId: problemId, title: problemId + ' - 问题 - CodeBursts', nav: nav, md: md, doc: doc, login: user});
+        if ((doc && doc.avail) || (doc && doc.avail == false && user && user.admin)) res.render('problems', { problemId: problemId, title: problemId + ' - 问题 - CodeBursts!', nav: nav, md: md, doc: doc, login: user});
         else {
             if (doc && doc.avail == false) {
                 var error = {status: '权限狗专用入口', stack: '玛雅这是权限题！少侠请回吧……要权限请联系jcpwfloi@163.com'};

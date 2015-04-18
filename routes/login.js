@@ -12,30 +12,35 @@ var nav = [
             ];
 
 router.get('/', function(req, res) {
-    res.render('login', { title: '登陆 - CodeBursts', nav: nav });
+    res.render('login', { title: '登陆 - CodeBursts!', nav: nav });
 });
 
 router.get('/register', function(req, res) {
-    res.render('login/register', { title: '注册 - CodeBursts', nav: nav });
+    res.render('login/register', { title: '注册 - CodeBursts!', nav: nav });
 });
 
 router.post('/register', function(req, res) {
     var username = req.param('user');
     var password = req.param('pass');
-    db.getUserByName(username, function(err, docs) {
-        if (err) throw err;
-        if (docs) {
-            res.send({stat: 0});
-            res.end();
-            return;
-        } else {
-            db.insertUser({name: username, pass: password}, function(err, doc) {
-                if (err) throw err;
-                res.send({stat: 1});
-                res.end();
-            });
-        }
-    });
+	if (!(/^[a-zA-Z0-9_]{3,16}$/.test(username))) {
+		res.send({stat: 0});
+		res.end();
+	} else {
+		db.getUserByName(username, function(err, docs) {
+			if (err) throw err;
+			if (docs) {
+				res.send({stat: 0});
+				res.end();
+				return;
+			} else {
+				db.insertUser({name: username, pass: password}, function(err, doc) {
+					if (err) throw err;
+					res.send({stat: 1});
+					res.end();
+				});
+			}
+		});
+	}
 });
 
 router.get('/register/success', function(req, res) {

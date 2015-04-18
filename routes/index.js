@@ -20,10 +20,15 @@ router.get('/', function(req, res) {
     if (req.session.user) {
         login = req.session.user;
     }
-  res.render('index', { title: '首页 - CodeBursts!',
+    var passdata = 
+    {
+      title: '首页 - CodeBursts!',
       nav: nav,
       ranklist: ranklist,
-      login: login});
+      login: login
+    };
+    if (login && login.v2) res.render('v2/index', passdata);
+    else res.render('index', passdata);
 });
 
 module.exports = router;

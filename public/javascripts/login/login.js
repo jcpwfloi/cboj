@@ -1,6 +1,8 @@
 $(document).ready(function() {
     var username, password;
     function login() {
+        username = $('#username').val();
+        password = $.md5($('#password').val());
         $.post("/login/auth", {
             username: username,
             password: password
@@ -21,8 +23,6 @@ $(document).ready(function() {
     $('#password').keyup(function(event) {
         var keycode = event.which;
         if (keycode == 13) {
-            username = $('#username').val();
-            password = $.md5($('#password').val());
             $('#username').focus();
             $('#submit').click();
         }

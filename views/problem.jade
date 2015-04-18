@@ -4,8 +4,8 @@ mixin problem(d)
         td= d.id
         td
             a(href!='/problems/' + d.id)= d.name
-        td= d.all
         td= d.ac
+        td= d.all
         td
             - if (d.all && d.ac)
                 | #{Math.round(d.ac * 10000 / d.all) / 100}%
@@ -24,8 +24,8 @@ block content
             th(width='9%') 状态
             th(width='10%') #
             th(width='35%') 题目名字
-            th 提交次数
             th 通过次数
+            th 提交次数
             th 通过比率
             each p in problems
                 + problem(p)
