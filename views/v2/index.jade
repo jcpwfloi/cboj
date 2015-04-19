@@ -33,14 +33,7 @@ html(lang='en')
             a(href='/problem') Problems
           li
             a(href='/status') Status
-          if login && login.username
-            li
-              a(href='/login') Welcome, #{login.username}!
-            li
-              a.button.special(href='/login/logout') Logout
-          else
-            li
-              a.button.special(href='/login') Login
+          include utils/navlogin
     // Banner
     section#banner
       h2 Welcome to CodeBursts!
@@ -58,6 +51,8 @@ html(lang='en')
         else
           li
             a.button.big(href='/login/register') Sign up Now!
+          li
+            a.button(href='/login', style='background-color: red') Login
     // One
     section#one.wrapper.style1.special
       .container
