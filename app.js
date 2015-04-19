@@ -34,6 +34,10 @@ app.use(session({
             pass: '901523a3e35211e4:Czr88159080',
             port: '6379'
         })
+	/*store: new RedisStore({
+		host: 'localhost',
+		port: '6379'
+	})*/
 	/*store: require('sessionstore').createSessionStore({
 		type: 'redis',
         host: '901523a3e35211e4.m.cnhza.kvstore.aliyuncs.com',
