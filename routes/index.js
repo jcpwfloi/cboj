@@ -20,6 +20,7 @@ router.get('/', function(req, res) {
     if (req.session.user) {
         login = req.session.user;
     }
+    console.log(login);
     var passdata = 
     {
       title: '首页 - CodeBursts!',
@@ -28,7 +29,7 @@ router.get('/', function(req, res) {
       login: login
     };
     if (login && login.v2) res.render('v2/index', passdata);
-    else res.render('index', passdata);
+    else res.render('v2/index', passdata);
 });
 
 module.exports = router;

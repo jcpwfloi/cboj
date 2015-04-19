@@ -1,166 +1,148 @@
 doctype html
-//
+//-
   Transit by TEMPLATED
   templated.co @templatedco
   Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 html(lang='en')
   head
     meta(charset='UTF-8')
-    |         
-    title Transit by TEMPLATED
-    |         
+    title Index Page - CodeBursts
     meta(http-equiv='content-type', content='text/html; charset=utf-8')
-    |         
     meta(name='description', content='')
-    |         
     meta(name='keywords', content='')
     //if lte IE 8
       script(src='js/html5shiv.js')
-    |         
     script(src='js/jquery.min.js')
-    |         
     script(src='js/skel.min.js')
-    |         
     script(src='js/skel-layers.min.js')
-    |         
     script(src='js/init.js')
-    |         
     noscript
       link(rel='stylesheet', href='css/skel.css')
-      |             
       link(rel='stylesheet', href='css/style.css')
-      |             
       link(rel='stylesheet', href='css/style-xlarge.css')
-  |     
   body.landing
     // Header
     header#header
       h1
-        a(href='index.html') Transit
-      |                 
+        a(href='index.html') CodeBursts
       nav#nav
         ul
           li
-            a(href='index.html') Home
-          |                         
+            a(href='/') Home
           li
-            a(href='generic.html') Generic
-          |                         
+            a(href='/problem') Problems
           li
-            a(href='elements.html') Elements
-          |                         
-          li
-            a.button.special(href='#') Sign Up
+            a(href='/status') Status
+          if login && login.username
+            li
+              a(href='/login') Welcome, #{login.username}!
+            li
+              a.button.special(href='/login/logout') Logout
+          else
+            li
+              a.button.special(href='/login') Login
     // Banner
     section#banner
-      h2 Hi. This is Transit.
-      |                 
-      p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      |                 
+      h2 Welcome to CodeBursts!
+      p This is an OnlineJudge System hosted for OIers.
       ul.actions
-        li
-          a.button.big(href='#') Lorem ipsum dolor
+        if login && login.username
+          li
+            a.button.big(href='#') Welcome, #{login.username}!
+          if login.admin
+            li
+              a.button(href='/admin', style='background-color: red') Admin Panel
+          else
+            li
+              a.button(href='/login/logout', style='background-color: red') Logout
+        else
+          li
+            a.button.big(href='#') Sign up Now!
     // One
     section#one.wrapper.style1.special
       .container
         header.major
-          h2 Consectetur adipisicing elit
-          |                         
-          p Lorem ipsum dolor sit amet, delectus consequatur, similique quia!
-        |                     
+          h2 Latest Notice
+          p Latest Notice of CodeBursts
         .row(class='150%')
           .4u(class='12u$(medium)')
             section.box
               i.icon.big.rounded.color1.fa-cloud
-              |                                 
-              h3 Lorem ipsum dolor
-              |                                 
-              p
-                | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim quam consectetur quibusdam magni minus aut modi aliquid.
-          |                         
+              h3 Nothing
+              p Nothing
           .4u(class='12u$(medium)')
             section.box
               i.icon.big.rounded.color9.fa-desktop
-              |                                 
-              h3 Consectetur adipisicing
-              |                                 
-              p
-                | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium ullam consequatur repellat debitis maxime.
-          |                         
-          .(class='4u$ 12u$(medium)')
+              h3 Nothing
+              p Nothing
+          div(class='4u$ 12u$(medium)')
             section.box
               i.icon.big.rounded.color6.fa-rocket
-              |                                 
-              h3 Adipisicing elit totam
-              |                                 
-              p
-                | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque eaque eveniet, nesciunt molestias. Ipsam, voluptate vero.
+              h3 Nothing
+              p Nothing
     // Two
     section#two.wrapper.style2.special
       .container
         header.major
-          h2 Lorem ipsum dolor sit
-          |                         
-          p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, autem.
-        |                     
+          h2 Ranklist
+          p These are people who are top 8 of the OnlineJudge, if you want to be here, just compete in the contests!
         section.profiles
           .row
             section.3u.profile(class='6u(medium) 12u$(xsmall)')
               img(src='images/profile_placeholder.gif', alt='')
-              |                                 
-              h4 Lorem ipsum
-              |                                 
-              p Lorem ipsum dolor
-            |                             
+              h4 Nobody
+              p NULL
             section.3u.profile(class='6u$(medium) 12u$(xsmall)')
               img(src='images/profile_placeholder.gif', alt='')
-              |                                 
-              h4 Voluptatem dolores
-              |                                 
-              p Ullam nihil repudi
-            |                             
+              h4 Nobody
+              p NULL
             section.3u.profile(class='6u(medium) 12u$(xsmall)')
               img(src='images/profile_placeholder.gif', alt='')
-              |                                 
-              h4 Doloremque quo
-              |                                 
-              p Harum corrupti quia
-            |                             
+              h4 Nobody
+              p NULL
             section.profile(class='3u$ 6u$(medium) 12u$(xsmall)')
               img(src='images/profile_placeholder.gif', alt='')
-              |                                 
-              h4 Voluptatem dicta
-              |                                 
-              p Et natus sapiente
-        |                     
+              h4 Nobody
+              p NULL
+          .row
+            section.3u.profile(class='6u(medium) 12u$(xsmall)')
+              img(src='images/profile_placeholder.gif', alt='')
+              h4 Nobody
+              p NULL
+            section.3u.profile(class='6u$(medium) 12u$(xsmall)')
+              img(src='images/profile_placeholder.gif', alt='')
+              h4 Nobody
+              p NULL
+            section.3u.profile(class='6u(medium) 12u$(xsmall)')
+              img(src='images/profile_placeholder.gif', alt='')
+              h4 Nobody
+              p NULL
+            section.profile(class='3u$ 6u$(medium) 12u$(xsmall)')
+              img(src='images/profile_placeholder.gif', alt='')
+              h4 Nobody
+              p NULL
         footer
           p
-            | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam dolore illum, temporibus veritatis eligendi, aliquam, dolor enim itaque veniam aut eaque sequi qui quia vitae pariatur repudiandae ab dignissimos ex!
-          |                         
+            | If you want to host a contest or generate your own problem, feel free to join our problem-generating platform! According to our Terms of Service, we must keep the privacy of your problems, and your communication with the server is under an HTTPS secured environment, if you want to host an official contest, just feel free to contact us.
           ul.actions
             li
-              a.button.big(href='#') Lorem ipsum dolor sit
+              a.button.big(href='#') Join the platform!(Developing....)
     // Three
     section#three.wrapper.style3.special
       .container
         header.major
-          h2 Consectetur adipisicing elit
-          |                         
-          p Lorem ipsum dolor sit amet. Delectus consequatur, similique quia!
-      |                 
+          h2 Some suggestions
+          p If you have any suggestions to this OnlineJudge System, just feel free to reply us!
       .container(class='50%')
-        form(action='#', method='post')
+        form(action='/suggestions', method='post')
           .row.uniform
             .6u(class='12u$(small)')
               input#name(name='name', value='', placeholder='Name', type='text')
-            |                             
-            .(class='6u$ 12u$(small)')
+            div(class='6u$ 12u$(small)')
               input#email(name='email', value='', placeholder='Email', type='email')
-            |                             
-            .(class='12u$')
+            div(class='12u$')
               textarea#message(name='message', placeholder='Message', rows='6')
-            |                             
-            .(class='12u$')
+            div(class='12u$')
               ul.actions
                 li
                   input.special.big(value='Send Message', type='submit')
@@ -170,108 +152,75 @@ html(lang='en')
         section.links
           .row
             section.3u(class='6u(medium) 12u$(small)')
-              h3 Lorem ipsum dolor
-              |                                 
+              h3 Nice OnlineJudge Systems
               ul.unstyled
                 li
-                  a(href='#') Lorem ipsum dolor sit
-                |                                     
+                  a(href='http://codeforces.com/') Codeforces
                 li
-                  a(href='#') Nesciunt itaque, alias possimus
-                |                                     
+                  a(href='http://www.topcoder.com/tc') TopCoder
                 li
-                  a(href='#') Optio rerum beatae autem
-                |                                     
+                  a(href='http://uoj.ac/') Universal Online Judge
                 li
-                  a(href='#') Nostrum nemo dolorum facilis
-                |                                     
+                  a(href='http://www.codechef.com/') Codechef
                 li
-                  a(href='#') Quo fugit dolor totam
-            |                             
+                  a(href='http://bestcoder.hdu.edu.cn/') BestCoder
             section.3u(class='6u$(medium) 12u$(small)')
-              h3 Culpa quia, nesciunt
-              |                                 
+              h3 Hosting Environment
               ul.unstyled
                 li
-                  a(href='#') Lorem ipsum dolor sit
-                |                                     
+                  a(href='#') Server: Express.js on Ubuntu 14.04.2 LTS
                 li
-                  a(href='#') Reiciendis dicta laboriosam enim
-                |                                     
+                  a(href='#') Session: Aliyun KVStore
                 li
-                  a(href='#') Corporis, non aut rerum
-                |                                     
+                  a(href='#') Database: MongoDB v2.4.9
                 li
-                  a(href='#') Laboriosam nulla voluptas, harum
-                |                                     
-                li
-                  a(href='#') Facere eligendi, inventore dolor
-            |                             
+                  a(href='#') Template Engine: Jade
             section.3u(class='6u(medium) 12u$(small)')
-              h3 Neque, dolore, facere
-              |                                 
+              h3 Resources
               ul.unstyled
                 li
-                  a(href='#') Lorem ipsum dolor sit
-                |                                     
+                  a(href='http://gnu.org/') GNU
                 li
-                  a(href='#') Distinctio, inventore quidem nesciunt
-                |                                     
+                  a(href='https://github.com/') GitHub
                 li
-                  a(href='#') Explicabo inventore itaque autem
-                |                                     
-                li
-                  a(href='#') Aperiam harum, sint quibusdam
-                |                                     
-                li
-                  a(href='#') Labore excepturi assumenda
-            |                             
-            section.(class='3u$ 6u$(medium) 12u$(small)')
-              h3 Illum, tempori, saepe
-              |                                 
+                  a(href='https://coding.net/') Coding.net
+            section(class='3u$ 6u$(medium) 12u$(small)')
+              h3 Contact Info
               ul.unstyled
                 li
-                  a(href='#') Lorem ipsum dolor sit
-                |                                     
+                  a(href='#') Address: 555 Chenhui Rd., Pudong District, Shanghai, China
                 li
-                  a(href='#') Recusandae, culpa necessita nam
-                |                                     
+                  a(href='#') Postal Code: 201203
                 li
-                  a(href='#') Cupiditate, debitis adipisci blandi
-                |                                     
+                  a(href='#') Tel: 021-50801890
                 li
-                  a(href='#') Tempore nam, enim quia
-                |                                     
+                  a(href='#') Fax: 021-50804338
                 li
-                  a(href='#') Explicabo molestiae dolor labore
-        |                     
+                  a(href='mailto:jcpwfloi@gmail.com') Email: jcpwfloi@gmail.com
         .row
           .8u(class='12u$(medium)')
             ul.copyright
-              li &copy; Untitled. All rights reserved.
-              |                                 
+              li CodeBursts©2015. All rights reserved.
               li
-                | Design: 
+                | Design:
                 a(href='http://templated.co') TEMPLATED
-              |                                 
               li
-                | Images: 
+                | Images:
                 a(href='http://unsplash.com') Unsplash
-          |                         
-          .(class='4u$ 12u$(medium)')
+              li
+                | 备案信息：
+                a(href='http://www.miitbeian.gov.cn/') 沪ICP备15007332号-1
+          div(class='4u$ 12u$(medium)')
             ul.icons
               li
                 a.icon.rounded.fa-facebook
                   span.label Facebook
-              |                                 
               li
                 a.icon.rounded.fa-twitter
                   span.label Twitter
-              |                                 
               li
                 a.icon.rounded.fa-google-plus
                   span.label Google+
-              |                                 
               li
                 a.icon.rounded.fa-linkedin
                   span.label LinkedIn
