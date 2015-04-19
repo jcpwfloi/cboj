@@ -1,0 +1,63 @@
+mixin problem(d)
+  tr(class!=d.styl)
+    td= d.stat
+    td= d.id
+    td
+      a(href!='/problems/' + d.id)= d.name
+    td= d.ac
+    td= d.all
+    td
+      if d.all && d.ac
+        | #{Math.round(d.ac * 10000 / d.all) / 100}%
+      else
+        | 0%
+
+doctype html
+//-
+  Transit by TEMPLATED
+  templated.co @templatedco
+  Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    title Elements - Transit by TEMPLATED
+    meta(http-equiv='content-type', content='text/html; charset=utf-8')
+    meta(name='description', content='')
+    meta(name='keywords', content='')
+    //if lte IE 8
+      script(src='js/html5shiv.js')
+    script(src='js/jquery.min.js')
+    script(src='js/skel.min.js')
+    script(src='js/skel-layers.min.js')
+    script(src='js/init.js')
+    noscript
+      link(rel='stylesheet', href='css/skel.css')
+      link(rel='stylesheet', href='css/style.css')
+      link(rel='stylesheet', href='css/style-xlarge.css')
+  body
+    // Header
+    header#header
+      h1
+        a(href='/') CodeBursts
+      include utils/nav
+    // Main
+    section#main
+      .container
+        section
+          br
+          h3 ProblemSet
+          .table-wrapper
+            table
+              thead
+                tr
+                  th(width='9%') 状态
+                  th(width='10%') #
+                  th(width='35%') 题目名字
+                  th 通过次数
+                  th 提交次数
+                  th 通过比率
+              tbody
+                each p in problems
+                  + problem(p)
+    // Footer
+    include utils/footer

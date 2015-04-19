@@ -23,19 +23,23 @@ function getProblems(pageId, callback) {
 }
 
 router.get('/', function(req, res) {
+    var login;
+    if (req.session.user) login = req.session.user;
     getProblems(1, function() {
         for (var i = 0; i < problems.length; ++ i) {
             if (problems[i].avail == false && !(req.session.user && req.session.user.admin)) {
                 problems[i].name = '这是权限题';
             }
         }
-        res.render('problem', { title: '问题 - CodeBursts!', nav: nav, problems: problems });
+        res.render('v2/problem', { title: '问题 - CodeBursts!', nav: nav, problems: problems, login: login });
     });
 });
 
 router.get('/:pageId', function(req, res) {
+    var login;
+    if (req.session.user) login = req.session.user;
     getProblems(req.params.pageId, function() {
-        res.render('problem', { title: '问题 - CodeBursts!', nav: nav, problems: problems });
+        res.render('v2/problem', { title: '问题 - CodeBursts!', nav: nav, problems: problems, login: login });
     });
 });
 
