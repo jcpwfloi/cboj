@@ -231,6 +231,32 @@ Step(
         shit();
     }
 );
+            } else if (doc.language == 3) {
+                var pathname = __dirname + '/../../judger/code.cpp';
+                var execpath = __dirname + '/../../judger/code.exe';
+Step(
+    function() {
+        fs.writeFile(pathname, doc.code, this);
+    },
+    function() {
+        cp.exec('g++ -o ' + execpath + ' ' + pathname + ' -DONLINE_JUDGE -lm -std=c++11', this)
+    },
+    function(err, stdout, stderr) {
+        var werr = err;
+    mongo.connect('mongodb://localhost/cboj', function(err, db) {
+        db.collection('submissions', function(err, collection) {
+            collection.update({submissionId: id}, {$set: {compilerMessage: stderr}}, function(err, doc) {
+                
+                if (werr) {
+                    endce(function() {
+                        doJudge();
+                    });
+                } else shit();
+            });
+        });
+    });
+    }
+);
             } else if (doc.language == 4) {
                 var execpath = __dirname + '/../../judger/code.exe';
 Step(
@@ -279,7 +305,7 @@ Step(
                     var anspath = datapath + filelist[i] + '.out';
                     Step(
                         function() {
-                            child = cp.exec(execpath + ' < ' + inputpath + ' > ' + outpath, {timeout: 1000, maxBuffer: 200*1024*1024, killSignal: 'SIGKILL'}, this);
+                            child = cp.exec(execpath + ' < ' + inputpath + ' > ' + outpath, {timeout: 2000, maxBuffer: 200*1024*1024, killSignal: 'SIGKILL'}, this);
                         },
                         function(err, stdout, stderr) {
                             if (err && err.killed && err.signal == 'SIGKILL') {
