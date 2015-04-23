@@ -14,6 +14,8 @@ var nav = [
 	{ name: '排名', ref: '/ranklist', active: false }
             ];
 
+var submission, problemId, title;
+
 router.get('/', function(req, res) {
     if (!req.session.user)
         res.render('login', { title: '登陆 - CodeBursts!', nav: nav });
@@ -49,6 +51,7 @@ router.post('/', function(req, res) {
         function(err, doc) {
             if (!doc || (!doc.avail && !(req.session.user && req.session.user.admin))) {
                 res.render('error', {error: {status: 404, stack: '根本没有这种问题！是假的！'}});
+                doc = null;
                 return;
             }
             this();
@@ -62,7 +65,7 @@ router.post('/', function(req, res) {
             cr.querySubmissionNum(this);
         },
         function(err, sum) {
-            var submission =
+            submission =
             {
                 problemId: problemId,
                 language: language,
@@ -88,8 +91,8 @@ router.get('/:problemId', function(req, res) {
         res.render('login', { title: '登陆 - CodeBursts!', nav: nav });
         return;
     }
-    var problemId = req.params.problemId;
-    var title = problemId + ' - 提交 - CodeBursts!';
+    problemId = req.params.problemId;
+    title = problemId + ' - 提交 - CodeBursts!';
     res.render('submit', { title: title, problemId: problemId, nav: nav });
 });
 

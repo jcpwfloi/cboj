@@ -9,26 +9,20 @@ var nav = [
 	{ name: '排名', ref: '/ranklist', active: false }
             ];
 
-var ranklist = [
-        { name: 'JCPWFLOI', rating: 2000 },
-        { name: 'LXLWDGY', rating: 1500 }
-            ];
+var login;
+var ranklist;
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    var login = {};
-    if (req.session.user) {
+    if (req.session.user)
         login = req.session.user;
-    }
-    var passdata = 
+    res.render('v2/index', 
     {
       title: '首页 - CodeBursts!',
       nav: nav,
       ranklist: ranklist,
       login: login
-    };
-    if (login && login.v2) res.render('v2/index', passdata);
-    else res.render('v2/index', passdata);
+    });
 });
 
 module.exports = router;

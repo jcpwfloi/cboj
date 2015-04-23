@@ -10,7 +10,7 @@ var nav = [
 	{ name: '排名', ref: '/ranklist', active: false }
             ];
 
-var problems; 
+var problems, login; 
 
 var perPage = 100;
 
@@ -23,7 +23,6 @@ function getProblems(pageId, callback) {
 }
 
 router.get('/', function(req, res) {
-    var login;
     if (req.session.user) login = req.session.user;
     getProblems(1, function() {
         for (var i = 0; i < problems.length; ++ i) {
@@ -36,7 +35,6 @@ router.get('/', function(req, res) {
 });
 
 router.get('/:pageId', function(req, res) {
-    var login;
     if (req.session.user) login = req.session.user;
     getProblems(req.params.pageId, function() {
         res.render('v2/problem', { title: '问题 - CodeBursts!', nav: nav, problems: problems, login: login });

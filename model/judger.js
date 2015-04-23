@@ -4,6 +4,7 @@ var fs = require('fs');
 var cp = require('child_process');
 var utils = require('../utils/stats');
 var problemId, filelist = [], child, timer, flag, id, result = [], score, startTime, endTime;
+var pathname, execpath, outpath, datapath, outpath, regin, regout, inputpath, anspath;
 
 function endwa(callback) {
     mongo.connect('mongodb://localhost/cboj', function(err, db) {
@@ -129,7 +130,7 @@ function getSubmission(submissionId, callback) {
 }
 
 function endProgram() {
-    cp.exec('rm -f ' + __dirname + '/../../judger/judge.lock ' + __dirname + '/../../judger/code.exe ' + __dirname + '/../../judger/code.cpp ' + __dirname + '/../../judger/code.pas', function(err, stdout, stderr) {
+    cp.exec('rm -f ' + __dirname + '/../../judger/judge.lock ' + __dirname + '/../../judger/code.exe ' + __dirname + '/../../judger/code.cpp ' + __dirname + '/../../judger/code.pas ' + __dirname + '/../../judger/tempout', function(err, stdout, stderr) {
     });
 }
 
@@ -168,14 +169,14 @@ function doJudge() {
             problemId = doc.problemId;
             flag = true;
             if (doc.language == 0) { //cpp
-                var pathname = __dirname + '/../../judger/code.cpp';
-                var execpath = __dirname + '/../../judger/code.exe';
+                pathname = __dirname + '/../../judger/code.cpp';
+                execpath = __dirname + '/../../judger/code.exe';
 Step(
     function() {
         fs.writeFile(pathname, doc.code, this);
     },
     function() {
-        cp.exec('g++ -o ' + execpath + ' ' + pathname + ' -DONLINE_JUDGE -lm', this)
+        cp.exec('g++ -o ' + execpath + ' ' + pathname + ' -DONLINE_JUDGE -lm', {timeout: 5000}, this)
     },
     function(err, stdout, stderr) {
         var werr = err;
@@ -184,6 +185,7 @@ Step(
             collection.update({submissionId: id}, {$set: {compilerMessage: stderr}}, function(err, doc) {
                 
                 if (werr) {
+                    werr = null;
                     endce(function() {
                         doJudge();
                     });
@@ -194,14 +196,14 @@ Step(
     }
 );
             } else if (doc.language == 1) { //pas
-                var pathname = __dirname + '/../../judger/code.pas';
-                var execpath = __dirname + '/../../judger/code.exe';
+                pathname = __dirname + '/../../judger/code.pas';
+                execpath = __dirname + '/../../judger/code.exe';
 Step(
     function() {
         fs.writeFile(pathname, doc.code, this);
     },
     function() {
-        cp.exec('fpc -o' + execpath + ' ' + pathname, this);
+        cp.exec('fpc -o' + execpath + ' ' + pathname, {timeout: 5000}, this);
     },
     function(err, stdout, stderr) {
         var werr = err;
@@ -220,7 +222,7 @@ Step(
     }
 );
             } else if (doc.language == 2) {
-                var execpath = __dirname + '/../../judger/code.exe';
+                execpath = __dirname + '/../../judger/code.exe';
 Step(
     function() {
         doc.code = '#!/usr/bin/python\n' + doc.code;
@@ -232,14 +234,14 @@ Step(
     }
 );
             } else if (doc.language == 3) {
-                var pathname = __dirname + '/../../judger/code.cpp';
-                var execpath = __dirname + '/../../judger/code.exe';
+                pathname = __dirname + '/../../judger/code.cpp';
+                execpath = __dirname + '/../../judger/code.exe';
 Step(
     function() {
         fs.writeFile(pathname, doc.code, this);
     },
     function() {
-        cp.exec('g++ -o ' + execpath + ' ' + pathname + ' -DONLINE_JUDGE -lm -std=c++11', this)
+        cp.exec('g++ -o ' + execpath + ' ' + pathname + ' -DONLINE_JUDGE -lm -std=c++11', {timeout: 5000}, this)
     },
     function(err, stdout, stderr) {
         var werr = err;
@@ -248,6 +250,7 @@ Step(
             collection.update({submissionId: id}, {$set: {compilerMessage: stderr}}, function(err, doc) {
                 
                 if (werr) {
+                    werr = null;
                     endce(function() {
                         doJudge();
                     });
@@ -258,7 +261,7 @@ Step(
     }
 );
             } else if (doc.language == 4) {
-                var execpath = __dirname + '/../../judger/code.exe';
+                execpath = __dirname + '/../../judger/code.exe';
 Step(
     function() {
         doc.code = '#!/usr/local/bin/node\n' + doc.code;
@@ -276,23 +279,30 @@ Step(
             }
         },
         function() {
-            var datapath = __dirname + '/../../judger/data/' + String(problemId) + '/';
+            datapath = __dirname + '/../../judger/data/' + String(problemId) + '/';
             var files = fs.readdirSync(datapath);
-            var regin = /\.in/, regout = /\.out/;
+            regin = /\.in/, regout = /\.out/;
+            var name;
             filelist = [];
             for (var i = 0; i < files.length; ++ i) {
-                var name = files[i];
+                name = files[i];
                 if (regin.test(name)) {
                     name = name.replace(regin, '');
                     if (files.indexOf(name + '.out') != -1) filelist.push(name);
                 }
             }
+            files = null;
             this();
         },
         function() {
+            /*old version
             var execpath = __dirname + '/../../judger/code.exe';
             var outpath = __dirname + '/../../judger/tempout';
             var datapath = __dirname + '/../../judger/data/' + String(problemId) + '/';
+            */
+            execpath = 'chroot /root/oj/judger ./code.exe';
+            datapath = __dirname + '/../../judger/data/' + String(problemId) + '/';
+            outpath = __dirname + '/../../judger/tempout';
             result = [];
             var shit = this;
             startTime = new Date().getTime();
@@ -301,11 +311,11 @@ Step(
                     shit();
                     return;
                 } else {
-                    var inputpath = datapath + filelist[i] + '.in';
-                    var anspath = datapath + filelist[i] + '.out';
+                    inputpath = datapath + filelist[i] + '.in';
+                    anspath = datapath + filelist[i] + '.out';
                     Step(
                         function() {
-                            child = cp.exec(execpath + ' < ' + inputpath + ' > ' + outpath, {timeout: 2000, maxBuffer: 200*1024*1024, killSignal: 'SIGKILL'}, this);
+                            child = cp.exec(execpath + ' < ' + inputpath + ' > ' + outpath, {timeout: 1000, maxBuffer: 200*1024*1024, killSignal: 'SIGKILL'}, this);
                         },
                         function(err, stdout, stderr) {
                             if (err && err.killed && err.signal == 'SIGKILL') {

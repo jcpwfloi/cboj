@@ -1,16 +1,16 @@
 nav#nav
     ul
         li
-            a(href='/') Home
+            a(href='/') 首页
         li
-            a(href='/problem') Problems
+            a(href='/problem') 问题
         li
-            a(href='/status') Status
+            a(href='/status') 状态
         if login && login.username
             li
-                a(href='#') Welcome, #{login.username}!
+                a(href='#') 欢迎您, #{login.username}!
             li
-                a.button.special(href='/login/logout') Logout
+                a.button.special(href='/login/logout') 注销
         else
             li
-                a.button.special(href='/login') Login
+                a.button.special(href='/login') 登陆

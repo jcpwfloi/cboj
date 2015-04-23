@@ -39,8 +39,6 @@ mongo.connect('mongodb://localhost/cboj', function(err, db) {
         collection.find({processed: {$ne: true}}, function(err, doc) {
             doc.toArray(function(err, doc1) {
                 for (var i = 0; i < doc1.length; ++ i) {
-                    console.log(i);
-                    console.log(doc1[i].status);
                     if (doc1[i].status != undefined) {
                         if (Number(doc1[i].status) == 0) addac(Number(doc1[i].problemId));
                         addall(Number(doc1[i].problemId));
