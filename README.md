@@ -100,7 +100,7 @@ int main() {
 Then you have to get prepared with the sandbox configuration, add this to the `makejail.conf`:
 
 ```
-    testCommandsInsideJail = ['g++ -o 1 1.cpp', 'gcc -o 1 1.cpp', 'fpc 1.pas', 'python 1.py'
+    testCommandsInsideJail = ['g++ -o 1 1.cpp', 'gcc -o 1 1.cpp', 'fpc 1.pas', 'python 1.py']
 ```
 
 Then you can build the sandbox!
