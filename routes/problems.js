@@ -12,20 +12,24 @@ var nav = [
 	{ name: '排名', ref: '/ranklist', active: false }
             ];
 
+var problemId, user;
+
 router.get('/:problemId', function(req, res) {
-    var problemId = Number(req.params.problemId);
-    var user;
+    problemId = Number(req.params.problemId);
     if (req.session.user)
         user = req.session.user;
+    else user = null;
     p.fetchProblem(problemId, function(err, doc) {
         if ((doc && doc.avail) || (doc && doc.avail == false && user && user.admin)) res.render('problems', { problemId: problemId, title: problemId + ' - 问题 - CodeBursts!', nav: nav, md: md, doc: doc, login: user});
         else {
             if (doc && doc.avail == false) {
                 var error = {status: '权限狗专用入口', stack: '玛雅这是权限题！少侠请回吧……要权限请联系jcpwfloi@163.com'};
                 res.render('error', {error: error});
+                error = null;
             } else {
                 var error = {status: 404, stack: '404 not found'};
                 res.render('error', {error: error});
+                error = null;
             }
         }
     });

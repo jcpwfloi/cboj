@@ -315,7 +315,7 @@ Step(
                     anspath = datapath + filelist[i] + '.out';
                     Step(
                         function() {
-                            child = cp.exec(execpath + ' < ' + inputpath + ' > ' + outpath, {timeout: 1000, maxBuffer: 200*1024*1024, killSignal: 'SIGKILL'}, this);
+                            child = cp.exec(execpath + ' < ' + inputpath + ' > ' + outpath, {timeout: 2000, maxBuffer: 200*1024*1024, killSignal: 'SIGKILL'}, this);
                         },
                         function(err, stdout, stderr) {
                             if (err && err.killed && err.signal == 'SIGKILL') {
