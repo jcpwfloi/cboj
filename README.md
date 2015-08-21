@@ -25,6 +25,12 @@ npm i
 
 ## Database & Session Configuration
 
+### Installing Redis
+    git clone https://github.com/antirez/redis
+    cd redis
+    make
+    make install
+
 The installation script will be released in the near future.
 
 ## Judger Configuration
